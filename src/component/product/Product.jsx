@@ -46,12 +46,12 @@ const Product = ({item,back}) =>{
             setData(old=>{
                 return {...old,
                     productName:item?item.productName:'',
-                    category:{value:item?item.category._id:'',label:item?item.category.category_name:''},
-                    subCategory:{value:item?item.subCategory._id:"",label:item?item.subCategory.subcategory_name:''},
-                    dashboard_img:{value:item?item.dashboard_img._id:"",label:item?item.dashboard_img.dashboard_name:''},
+                    category:{value:item?item.category?._id:'',label:item?item.category?.category_name:''},
+                    subCategory:{value:item?item.subCategory?._id:"",label:item?item.subCategory?.subcategory_name:''},
+                    dashboard_img:{value:item?item.dashboard_img?._id:"",label:item?item.dashboard_img?.dashboard_name:''},
                     productPrice:item?item.productPrice:"",
                     productOffer:item?item.productOffer:"",
-                    material:{value:item?item.material._id:"",lable:item?item.material.material_type_name:''},
+                    material:{value:item?item.material?._id:"",lable:item?item.material?.material_type_name:''},
                     productQty:item?item.productQty:"",
                     productOriginCountry:item?item.productOriginCountry:'',
                     productCode:item?item.productCode:"",
@@ -207,14 +207,14 @@ const Product = ({item,back}) =>{
               onChange={handleCategoryCangeData}/>
               
               <p>Enter SubCategory id</p>
-              <Dropdown data={subCategoryData} value={data.subCategory} defaultValue={item?{label:item?.subCategory.subcategory_name,value:item?.subCategory._id}:null} 
+              <Dropdown data={subCategoryData} value={data.subCategory} defaultValue={item?{label:item?.subCategory?.subcategory_name,value:item?.subCategory?._id}:null} 
               onChange={(changevalue)=>{
                   setData(old=>{
                       return {...old,subCategory:changevalue}
                   })
               }}/>
               <p>Enter DashBoard id</p>
-              <Dropdown data={dashboardData} value={data.dashboard_img} defaultValue={item?{label:item?.dashboard_img.dashboard_name,value:item?.dashboard_img._id}:null}
+              <Dropdown data={dashboardData} value={data.dashboard_img} defaultValue={item?{label:item?.dashboard_img?.dashboard_name,value:item?.dashboard_img?._id}:null}
               onChange={
                 (change)=>{
                     setData((old)=>{
@@ -223,7 +223,7 @@ const Product = ({item,back}) =>{
                 }  
               }/>
               <p>Enter DashBoard id</p>
-              <Dropdown value={data.material} data = {materialData} defaultValue={item?{label:item?.material.material_type_name,value:item?.material._id}:null}
+              <Dropdown value={data.material} data = {materialData} defaultValue={item?{label:item?.material?.material_type_name,value:item?.material?._id}:null}
               onChange={(change)=>{
                   setData((old)=>{
                       return {...old,material:change}

@@ -14,9 +14,9 @@ const Table = ({item,onChangeEdit,onDelete}) =>{
         <>
         <div className={Styles.table1}><img src={item.productImage.length>0?"http://51.15.201.39:3002/"+item_image:item_image} alt="image" style={{width:150,height:70}}/></div>
         <div className={Styles.table1}><p style={{textAlign:'center'}}>{item.productName}</p></div>
-        <div className={Styles.table1}><p>{item.category.category_name}</p></div>
-        <div className={Styles.table1}><p>{item.subCategory.subcategory_name}</p></div>
-        <div className={Styles.table1}><p>{item.dashboard_img.dashboard_name}</p></div>
+        <div className={Styles.table1}><p>{item.category?.category_name}</p></div>
+        <div className={Styles.table1}><p>{item.subCategory?.subcategory_name}</p></div>
+        <div className={Styles.table1}><p>{item.dashboard_img?.dashboard_name}</p></div>
         <div className={Styles.table1}><p>{item.productPrice}</p></div>
         <div className={Styles.table1}><p>{item.productOffer}</p></div>
         <div className={Styles.table1}><p>{item.productQty}</p></div>
