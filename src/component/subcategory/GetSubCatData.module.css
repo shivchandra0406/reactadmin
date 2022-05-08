@@ -1,0 +1,40 @@
+.tableMainContainer{
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    overflow: scroll;
+}
+.tableMainContainer ::-webkit-scrollbar{
+    display: none;
+}
+.tableContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.table{
+    width: 205px;
+    height: 25px;
+    padding: 10px;
+    border: 1px solid black;
+    display: flex-box;
+    flex-direction: row;
+    text-align: center;
+}
+.table1{
+    width: 205px;
+    height: 70px;
+    padding: 10px;
+    border: 1px solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+span{  
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    
+}

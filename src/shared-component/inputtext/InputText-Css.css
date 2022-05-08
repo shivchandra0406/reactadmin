@@ -1,0 +1,15 @@
+
+
+.textinput{
+    width: 70%;
+    height: 20px;
+    padding: 10px;
+    font-size: 20px;
+    outline: none;
+    background-color: #fff;
+    color: black;
+    margin-top: 0px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    border-color: cornflowerblue;
+}

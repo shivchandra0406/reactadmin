@@ -1,0 +1,60 @@
+.tableMainContainer{
+    display: flex;
+    flex-direction: column;
+    overflow:-moz-hidden-unscrollable;
+}
+.butoonWrapper{
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.textinput{
+    width: 270px;
+    height:30px;
+    padding-left: 10px;
+}
+.tableContainer{   
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.wraptable{
+    width:100%;
+    height: 100%;
+    overflow: scroll;
+}
+.wraptable ::-webkit-scrollbar{
+    display: none;
+}
+.table{
+    width: 200px;
+    height: 35px;
+    padding: 10px;
+    border: 1px solid black;
+    display: flex-box;
+    flex-direction: row;
+    text-align: center;
+}
+.table1{
+    width: 200px;
+    height: 70px;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #9ac1f5;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.table1 span{  
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    
+}

@@ -1,0 +1,90 @@
+.main-container{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+.textinput-container{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.textinput-container p{
+    font-size: 16px;
+    margin-bottom: 4px;
+    margin-left: 10px;
+}
+.buttonConatiner{
+    width: 53%;
+    display: flex;
+    flex-direction: row-reverse; 
+}
+.button{
+    width:130px;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    background-color: rgb(54, 51, 51);
+    color: whitesmoke;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+input#file{
+    display: none;
+}
+.button>span{
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.inputfile + label {
+    width: 150px;
+    padding: 10px;
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
+}
+
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+}
+.inputimages{
+    display: flex;
+    flex-direction:row;   
+}
+.imgsrc{
+    width: 50px;
+    height: 70px;
+}
+.imageblock
+{
+    display: flex;
+    flex-direction:row; 
+    width: 100px;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(100, 218, 32);
+    margin-right: 5px ;
+    margin-bottom: 10px ;
+}
+.bckbtn_container{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
