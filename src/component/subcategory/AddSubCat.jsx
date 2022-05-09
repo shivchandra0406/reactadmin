@@ -102,7 +102,7 @@ const AddSubCat = ({item,back}) => {
            </button>
            </div>
            <InputText placeholder={'Enter SubCategory Name'} value={data} onChange={(e)=>setData(e.target.value)}/>
-           <Dropdown data={catdata} value={selectedOption} defaultValue ={item?{value:item.categories._id,label:item.categories.category_name}:null}
+           <Dropdown data={catdata} value={selectedOption} defaultValue ={item?selectedOption:null}
             onChange={handleChange}/>
            <input type="file" name="file" id="file" className={Styles.inputfile} onChange={onchagefile}/>
            <label for="file" className={Styles.filelable}>Choose a Image</label>

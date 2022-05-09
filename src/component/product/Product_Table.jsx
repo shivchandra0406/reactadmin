@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Styles from './ProductTable.module.css'
 import Product from './Product'
 import Table from './Table'
@@ -13,6 +13,8 @@ const Product_Table = () => {
     const [singledata,setSingleData] = useState({})
     const [addProduct,setAddProduct] = useState(false)
     const [rerender,setRerender] = useState(false)
+    const searchparam = useRef('')
+    const [filterdata,setFilterdata] = useState([])
     useEffect(() => {
         let unsubscribeData = fetchData()
         // console.log("data");
@@ -59,8 +61,8 @@ const Product_Table = () => {
             console.log("result---->", result);
             if (result.Status === true) {
                 setData(result.data)
+                setFilterdata(result.data)
                 //console.log("ser data",data);
-
             }
             else {
                 alert(result.message)
@@ -70,13 +72,27 @@ const Product_Table = () => {
         }
     }
 
+    const filterFunction = () =>{
+        if(searchparam.current.value===''){
+            setData(filterdata)
+        }else{
+           setData(data.filter(item=>{
+               if(item.productName.toLowerCase().includes(searchparam.current.value.toLowerCase())||
+                item.category?.category_name.toLowerCase().includes(searchparam.current.value.toLowerCase())
+               ){
+                   return item
+               }
+           })) 
+        }
+    }
+
     return (
         <>
             {!(editState)?(<div className={Styles.tableMainContainer}>
                 <h2>All Product Data</h2>
                 <div className={Styles.butoonWrapper}>
                   <p style={{fontSize:16}}>search Product</p>
-                  <input className={Styles.textinput} type="text" placeholder='Enter Product Name'/>
+                  <input ref={searchparam} className={Styles.textinput} type="text" placeholder='Enter Product Name' onChange={filterFunction}/>
                   <button onClick={()=>{
                       setAddProduct(true)
                       setEditState(true)

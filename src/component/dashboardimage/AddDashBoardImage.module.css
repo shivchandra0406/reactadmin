@@ -48,3 +48,7 @@
     width: 100px;
     height: 90px;
 }
+.bckbtn_container{
+    display: flex;
+    flex-direction: row;
+}

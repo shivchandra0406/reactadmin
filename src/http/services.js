@@ -8,9 +8,6 @@ const headers = {
   
 };
      
-const headers1={ 
-  'Content-Type': 'multipart/form-data' 
-}
 
 const services = {
   post: async (apiname, data, image = false) => {
@@ -57,7 +54,7 @@ const services = {
         method: 'PUT',
         body: !image ? JSON.stringify(data) : data
       }
-      if(image){
+      if(!image){
          options.headers=headers
       }
       const response = await fetch(APIURL + apiname,options);
@@ -98,5 +95,19 @@ const services = {
       throw err;
     }
   },
+  patch:async(apiname,data)=>{
+    try {
+      console.log("data",apiname,data);
+      const response = await fetch(APIURL + apiname, {
+        method: 'PATCH',
+        headers: headers,
+        body:JSON.stringify(data)
+      });
+      const json = await response.json();
+      return json;
+    } catch (err) {
+      throw err;
+    }
+  }
 };
 export default services;

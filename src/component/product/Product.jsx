@@ -203,18 +203,18 @@ const Product = ({item,back}) =>{
                   })
               }}/>
               <p>Enter Category id</p>
-              <Dropdown data={categoryData} value = {data.category} defaultValue={item?{label:item.category?.category_name,value:item.category?._id}:null}
+              <Dropdown data={categoryData} value = {data.category} defaultValue={item?data.category:null}
               onChange={handleCategoryCangeData}/>
               
               <p>Enter SubCategory id</p>
-              <Dropdown data={subCategoryData} value={data.subCategory} defaultValue={item?{label:item?.subCategory?.subcategory_name,value:item?.subCategory?._id}:null} 
+              <Dropdown data={subCategoryData} value={data.subCategory} defaultValue={item?data.subCategory:null} 
               onChange={(changevalue)=>{
                   setData(old=>{
                       return {...old,subCategory:changevalue}
                   })
               }}/>
               <p>Enter DashBoard id</p>
-              <Dropdown data={dashboardData} value={data.dashboard_img} defaultValue={item?{label:item?.dashboard_img?.dashboard_name,value:item?.dashboard_img?._id}:null}
+              <Dropdown data={dashboardData} value={data.dashboard_img} defaultValue={item?data.dashboard_img:null}
               onChange={
                 (change)=>{
                     setData((old)=>{
@@ -223,7 +223,7 @@ const Product = ({item,back}) =>{
                 }  
               }/>
               <p>Enter DashBoard id</p>
-              <Dropdown value={data.material} data = {materialData} defaultValue={item?{label:item?.material?.material_type_name,value:item?.material?._id}:null}
+              <Dropdown value={data.material} data = {materialData} defaultValue={item?data.material:null}
               onChange={(change)=>{
                   setData((old)=>{
                       return {...old,material:change}
