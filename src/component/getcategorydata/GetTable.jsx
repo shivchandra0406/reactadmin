@@ -8,11 +8,11 @@ const GetTable = ({item,onChangeEdit,onDelete}) =>{
         <>
         <div className="table1"><span>{item._id}</span></div>
         <div className="table1"><span>{item.category_name}</span></div>
-        <div className="table1"><img src={item.category_image?item.category_image:""} alt="image" style={{width:150,height:70}}/></div>
+        <div className="table1"><img src={item.category_image?item.category_image:""} alt="image" style={{width:100,height:30}}/></div>
         <div className="table1"><p>
-        <AiFillEdit color='red' size={18} width={50} height={35} style={{padding:10+'px',backgroundColor:'#ebf2b3'}} onClick={
+        <AiFillEdit color='red' size={10} width={20} height={15} style={{padding:5+'px',backgroundColor:'#ebf2b3'}} onClick={
             onChangeEdit}/>
-        <AiFillDelete color='red' size={18} width={50} height={35}  style={{ padding:10,marginLeft:10+'px',backgroundColor:'#ebf2b3'}} onClick={onDelete}/></p></div>
+        <AiFillDelete color='red' size={10} width={20} height={15}  style={{ padding:5,marginLeft:10+'px',backgroundColor:'#ebf2b3'}} onClick={onDelete}/></p></div>
       </>     
     )
 }

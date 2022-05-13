@@ -1,6 +1,6 @@
 import React,{useState,useEffect, useRef} from 'react';
 
-import '../dashboardimage/GetDashBoardImage.module.css';
+import '../subcategory/GetSubCatData.module.css';
 import services from '../../http/services';
 import GetTableMaterial from './GetTableMaterial';
 import AddMaterial from './AddMaterial'

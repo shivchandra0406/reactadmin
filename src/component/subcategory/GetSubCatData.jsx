@@ -1,7 +1,7 @@
 import React,{useState,useEffect, useRef} from 'react';
 import services from '../../http/services';
 import AddSubCat from './AddSubCat';
-import './GetSubCatData.module.css'
+import Styles from './GetSubCatData.module.css'
 import GetTableSubCatData from './GetTableSubCatData';
 import { IoMdAdd} from 'react-icons/io';
 
@@ -57,9 +57,10 @@ const GetSubCatData = () => {
     }
     return (
         <>
-        {!edit?(<div className="tableMainContainer">
+        {!edit?(<div className={Styles.tableMainContainer
+        }>
                 <h2>All SubCategory Data</h2>
-                <div className='btnWrapper'>
+                <div className={Styles.btnWrapper}>
                 <p>Search Product</p>
                 <input type='text' placeholder='serach product'  className='inputtext'/>
                 <button onClick={()=>{
@@ -77,19 +78,19 @@ const GetSubCatData = () => {
                   borderRadius:10
               }}><IoMdAdd color='white'/>Add</button>
             </div>
-                <div className="tableContainer">
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>ID</span></div>
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>Category Name</span></div>
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>SubCategory Name</span></div>
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>SubCategory Image</span></div> 
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>Action</span></div> 
+                <div className={Styles.tableContainer}>
+                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>ID</span></div>
+                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Category Name</span></div>
+                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>SubCategory Name</span></div>
+                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>SubCategory Image</span></div> 
+                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Action</span></div> 
                     </div>
                 {
                  data.length>0? data.map((item, index) => {
                         //console.log("item ");
                         return (
 
-                            <div className="tableContainer" key={item._id}>
+                            <div className={Styles.tableContainer} key={item._id}>
                                 <GetTableSubCatData key={item._id} item={item} onChangeEdit={()=>onChangeEdit(item)} onDelete={()=>onDelete(item._id)}/>
                             </div>
                         )

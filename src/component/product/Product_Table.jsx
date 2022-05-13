@@ -6,8 +6,14 @@ import services from '../../http/services'
 import { IoMdAdd} from 'react-icons/io';
 
 
-const Product_Table = () => {
 
+// <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Bullet Point1</p></div>
+// <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Bullet Point2</p></div>
+// <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Bullet Point3</p></div>
+// <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Bullet Point4</p></div>
+// <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Bullet Point5</p></div>
+
+const Product_Table = () => {
     const [data, setData] = useState([])
     const [editState,setEditState] = useState(false)
     const [singledata,setSingleData] = useState({})
@@ -109,18 +115,14 @@ const Product_Table = () => {
                   </div>
                 <div className={Styles.wraptable}>
                 <div className={Styles.tableContainer}>
-                <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>Product Image</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>Product Name</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>Category Name</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>SubCategory Name</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>DashBoard Image Name</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>Price</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>Offer</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>Total Quantity</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>Origin Country</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>Code</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>Description</span></div>
-                    <div className={Styles.table}><span style={{fontSize:18,color:'green'}}>Action</span></div>
+                <div className={Styles.table}><p style={{fontSize:10,color:'green',textAlign:'center'}}>Product Image</p></div>
+                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Product Name</p></div>
+                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Category Name</p></div>
+                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>SubCategory Name</p></div>
+                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>DashBoard Image Name</p></div>
+                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Price</p></div>
+                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Description</p></div>
+                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Action</p></div>
                 </div>
                 {
                     data.length>0? data.map((item, index) => {

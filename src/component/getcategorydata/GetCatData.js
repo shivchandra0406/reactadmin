@@ -110,10 +110,10 @@ const GetCatData = () => {
                 </div>
                 <div className='mailtablecontainer'>
                 <div className="tableContainer">
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>ID</span></div>
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>Category Name</span></div>
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>Category Image</span></div> 
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>Action</span></div> 
+                    <div className="table"><span style={{fontSize:10,color:'green'}}>ID</span></div>
+                    <div className="table"><span style={{fontSize:10,color:'green'}}>Category Name</span></div>
+                    <div className="table"><span style={{fontSize:10,color:'green'}}>Category Image</span></div> 
+                    <div className="table"><span style={{fontSize:10,color:'green'}}>Action</span></div> 
                 </div>
                 {  
                  

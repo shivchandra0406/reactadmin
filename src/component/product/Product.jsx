@@ -15,19 +15,24 @@ const Product = ({item,back}) =>{
     const [materialData,setMaterilaData] = useState([])
     const [image,setImage] = useState([])
     const [bimage,setBimage] = useState([])
+    const [bulletPoints,setBulletPoints] = useState({
+        bulletPoint1:'',
+        bulletPoint2:'',
+        bulletPoint3:'',
+        bulletPoint3:'',
+        bulletPoint4:'',
+        bulletPoint5:''
+    })
+    //const [fields,setFields] = useState(1)
     const [data,setData] = useState({
         productName:'',
         category:'',
         subCategory:"",
         dashboard_img:"",
         productPrice:"",
-        productOffer:"",
         material:"",
-        productQty:"",
-        productOriginCountry:'',
-        productCode:"",
         productDescription:"",
-        ProductImage:[]
+        ProductImage:[],
     })
     // let imagedata = item.productImage.length>0?item.productImage:[]
     // for(let image of imagedata)
@@ -50,14 +55,12 @@ const Product = ({item,back}) =>{
                     subCategory:{value:item?item.subCategory?._id:"",label:item?item.subCategory?.subcategory_name:''},
                     dashboard_img:{value:item?item.dashboard_img?._id:"",label:item?item.dashboard_img?.dashboard_name:''},
                     productPrice:item?item.productPrice:"",
-                    productOffer:item?item.productOffer:"",
                     material:{value:item?item.material?._id:"",lable:item?item.material?.material_type_name:''},
-                    productQty:item?item.productQty:"",
-                    productOriginCountry:item?item.productOriginCountry:'',
-                    productCode:item?item.productCode:"",
                     productDescription:item?item.productDescription:"",
                 }
             })
+            //let {bulletPoint1,bulletPoint2,bulletPoint3,bulletPoint4,bulletPoint5} = item.bulletPoints
+            setBulletPoints(item.bulletPoints)
         }
         const getAllProductData = async()=>{
             try{
@@ -149,13 +152,13 @@ const Product = ({item,back}) =>{
         formdata.append('dashboard_img',data.dashboard_img.value)
         formdata.append('productPrice',data.productPrice)
         formdata.append('material',data.material.value)
-        formdata.append('productOffer',data.productOffer)
-        formdata.append('productQty',data.productQty)
-        formdata.append('productCode',data.productCode)
-        formdata.append('productOriginCountry',data.productOriginCountry)
+        formdata.append('bulletPoints[bulletPoint1]',bulletPoints.bulletPoint1)
+        formdata.append('bulletPoints[bulletPoint2]',bulletPoints.bulletPoint2)
+        formdata.append('bulletPoints[bulletPoint3]',bulletPoints.bulletPoint3)
+        formdata.append('bulletPoints[bulletPoint4]',bulletPoints.bulletPoint4)
+        formdata.append('bulletPoints[bulletPoint5]',bulletPoints.bulletPoint5)
         formdata.append('productDescription',data.productDescription)
         image.map(img=>formdata.append('ProductImage',img))
-        
         try{
             // const config = {     
             //     headers: { 'content-type': 'multipart/form-data' }
@@ -222,7 +225,7 @@ const Product = ({item,back}) =>{
                     })
                 }  
               }/>
-              <p>Enter DashBoard id</p>
+              <p>Select Material</p>
               <Dropdown value={data.material} data = {materialData} defaultValue={item?data.material:null}
               onChange={(change)=>{
                   setData((old)=>{
@@ -236,36 +239,40 @@ const Product = ({item,back}) =>{
                       return {...old,productPrice:e.target.value}
                   })
               }}/>
-              <p>Enter Product Offer</p>
-              <InputText placeholder="Enter Offer" value={data.productOffer} onChange={(e)=>{
-                  setData((old)=>{
-                      return {...old,productOffer:e.target.value}
-                  })
-              }}/>
-              <p>Enter Total Quantity</p>
-              <InputText placeholder="Enter Total Quantity" value={data.productQty} onChange={(e)=>{
-                  setData((old)=>{
-                      return {...old,productQty:e.target.value}
-                  })
-              }}/>
-              <p>Enter Product Origin Country</p>
-              <InputText placeholder="Enter Product Origin Country" value={data.productOriginCountry} onChange={(e)=>{
-                  setData((old)=>{
-                      return {...old,productOriginCountry:e.target.value}
-                  })
-              }}/>
-              <p>Enter Product Code</p>
-              <InputText placeholder="Enter Product Code" value={data.productCode} onChange={(e)=>{
-                  setData((old)=>{
-                      return {...old,productCode:e.target.value}
-                  })
-              }}/>
               <p>Enter Product Description</p>
               <InputText placeholder="Enter Product Description" value={data.productDescription} onChange={(e)=>{
                   setData((old)=>{
                       return {...old,productDescription:e.target.value}
                   })
               }}/>
+              <p>Enter All Bullet Points</p>
+                <div className="bulletContainer">
+                    <InputText placeholder="Enter Bullet Points1" value={bulletPoints.bulletPoint1} onChange={(e)=>{
+                        setBulletPoints((old)=>{
+                          return {...old,bulletPoint1:e.target.value}
+                        } )
+                    }}/> 
+                    <InputText placeholder="Enter Bullet Points2" value={bulletPoints.bulletPoint2} onChange={(e)=>{
+                        setBulletPoints((old)=>{
+                          return {...old,bulletPoint2:e.target.value}  
+                        } )
+                    }}/> 
+                    <InputText placeholder="Enter Bullet Points3" value={bulletPoints.bulletPoint3} onChange={(e)=>{
+                        setBulletPoints((old)=>{
+                          return {...old,bulletPoint3:e.target.value}  
+                        } )
+                    }}/> 
+                    <InputText placeholder="Enter Bullet Points4" value={bulletPoints.bulletPoint4} onChange={(e)=>{
+                        setBulletPoints((old)=>{
+                          return {...old,bulletPoint4:e.target.value}  
+                        } )
+                    }}/> 
+                    <InputText placeholder="Enter Bullet Points5" value={bulletPoints.bulletPoint5} onChange={(e)=>{
+                        setBulletPoints((old)=>{
+                          return {...old,bulletPoint5:e.target.value}  
+                        } )
+                    }}/>   
+                </div>
               <p>Choose Product Image</p>
              {image.length>0?<div className="inputimages">
                 {

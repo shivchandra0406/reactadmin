@@ -1,6 +1,5 @@
 import React,{useState,useEffect, useRef} from 'react';
-
-import './GetDashBoardImage.module.css';
+import '../product/ProductTable.module.css'
 import services from '../../http/services';
 import GetTableDashBoardImage from './GetTableDashBoardImage';
 import AddDashBoardImage from './AddDashBoardImage'
@@ -92,7 +91,7 @@ const GetDashBoardImage = () => {
         <>
         {
             !edit?(<div className="tableMainContainer">
-                <h2>All Category Data</h2>
+                <h2>All DashBoard Data</h2>
                 <div className='btnWrapper'>
                     <p>Search DashBoard</p>
                     <input ref={searchparams} type='text' placeholder='serach product' className='inputtext' onChange={filterFunction} />
@@ -101,21 +100,22 @@ const GetDashBoardImage = () => {
                         setEdit(true)
                     }}
                     style={{
-                      width:90,
-                      height:30,
-                      background:'#04b023',
-                      color:'white',
-                      marginLeft:15,
-                      outlineColor:'white',
-                      border:0,
-                      borderRadius:10
+                        width:90,
+                        height:30,
+                        background:'#04b023',
+                        color:'white',
+                        outlineColor:'white',
+                        border:0,
+                        marginLeft:15,
+                        borderRadius:10
                   }}><IoMdAdd color='white'/>Add</button>
                 </div>
+                <div className="wraptable">
                 <div className="tableContainer">
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>ID</span></div>
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>DashBoard Title</span></div>
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>DashBoard Image</span></div> 
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>Action</span></div> 
+                    <div className="table"><span style={{fontSize:12,color:'green'}}>ID</span></div>
+                    <div className="table"><span style={{fontSize:12,color:'green'}}>DashBoard Title</span></div>
+                    <div className="table"><span style={{fontSize:12,color:'green'}}>DashBoard Image</span></div> 
+                    <div className="table"><span style={{fontSize:12,color:'green'}}>Action</span></div> 
                 </div>
                 {
                  data.length>0? data.map((item, index) => {
@@ -128,9 +128,11 @@ const GetDashBoardImage = () => {
                         )
                     }) : <h2>No Any Product Data</h2>
                 }
+                </div>
                 </div>):!singledata && edit?<AddDashBoardImage item={editdata} back = {back}/>:<AddDashBoardImage back={back}/>
             }
-            </>
+            
+        </>
     );
 }
 
