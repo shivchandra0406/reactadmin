@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Styles from './order.module.css'
-import { AiFillEdit} from 'react-icons/ai';
+import { FiDownload} from 'react-icons/fi';
 
         
 const GetTableOrderData = ({item,onChangeEdit,onDelete}) =>{
@@ -71,7 +71,7 @@ const GetTableOrderData = ({item,onChangeEdit,onDelete}) =>{
             <p style={orderStyle}>{item.order_status}</p>
         </div>
         <div className={Styles.table1}><p>
-        <AiFillEdit color='red' size={14} width={40} height={30} style={{padding:5+'px',backgroundColor:'#ebf2b3'}} onClick={
+        <FiDownload color='red' size={14} width={40} height={30} style={{padding:5+'px',backgroundColor:'#ebf2b3'}} onClick={
             onChangeEdit}/></p>
         </div>
       </>     

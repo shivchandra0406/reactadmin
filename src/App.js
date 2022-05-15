@@ -25,7 +25,6 @@ const App = () => (
     <Resource name="Materials" list={GetMaterial}/>
     <Resource name="Order" list={OrderHistory}/>
     <Resource name='BulkUploadProduct' list ={BulkUploadProduct}/>
-
   </Admin>
 );
 

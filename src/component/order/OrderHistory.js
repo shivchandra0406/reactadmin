@@ -1,15 +1,16 @@
-import React,{useState,useEffect, useRef} from 'react';
+import React,{useState,useEffect} from 'react';
 import services from '../../http/services';
 import Styles from './order.module.css'
 import GetTableOrderData from './GetTableOrderData';
 import Dropdown from '../DropDown';
 import DateOption from '../../Date/DateOption';
-
-
+import InvoiceTemplate from '../Invoice/InvoiceTemplate';
 
 const OrderHistory = () => {
     const [data,setData] = useState([])
     const [filterdata,setFilterdata] = useState([])
+    const [invoice,setInvoice] =useState(false)
+    const [invoicedata,setInvoicedata] =useState({})
     const [options,setOptions] = useState([
         {label:'Select',value:''},
         {label:'Orderd',value:'Orderd'},{label:'Dispatch',value:'Dispatch'},
@@ -99,30 +100,26 @@ const OrderHistory = () => {
         }
     }
 
-    const onDelete= async(id)=>{
-        let confirm = window.confirm('Are you sure you want delete subcategory data')
-        if(confirm){
-            let apiname = 'product/deleteSubCategory'
-            let params = {
-                _id:[id]
-            }
-            let result = await services.delete(apiname,params)
-            if(result.Status){
-                setData(data.filter(item=>item._id!==id))
-                alert('delete successfully')
-            }else{
-                alert(result.message)
-            }
-                
-        }
+    //download pdf start
+    const downloadPdf=(item)=>{
+        setInvoice(true)
+        setInvoicedata(item)
+            
     }
+    //download pdf end
+
+    //back fuction start
+    const back = () =>{
+        setInvoice(false)
+        setInvoicedata({})
+    }
+    //back function end
+
     return (
         <>
-        <div className={Styles.tableMainContainer}>
-                <h2>All Order History Data</h2>
+        {!invoice?(<div className={Styles.tableMainContainer}>
+                <h2 style={{color:'#3F15EA'}}>All Order History Data</h2>
                 <div className={Styles.btnWrapper}>
-                <p>Search Product</p>
-                <input type='text' placeholder='serach product'  className='inputtext'/>
                 <Dropdown data={options} value = {optionValue} onChange = {onChange}/>
                 <Dropdown data={dateOptions} value = {dateOptionValue} onChange = {onChageDate}/>
             </div>
@@ -135,7 +132,7 @@ const OrderHistory = () => {
                     <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Price</span></div> 
                     <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Payment</span></div>
                     <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Order Status</span></div>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Action</span></div> 
+                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Invoice</span></div> 
                     </div>
                 {
                  data.length>0? data.map((item, index) => {
@@ -143,12 +140,13 @@ const OrderHistory = () => {
                         return (
 
                             <div className={Styles.tableContainer} key={item._id}>
-                                <GetTableOrderData key={item._id} item={item} />
+                                <GetTableOrderData key={item._id} item={item} onChangeEdit ={()=>downloadPdf(item)} />
                             </div>
                         )
                     }) : <h2>No Any Order Data</h2>
                 }
-                </div>
+                </div>):<InvoiceTemplate item={invoicedata} back={back}/>
+            }
             </>
     );
 }

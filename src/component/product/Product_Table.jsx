@@ -22,7 +22,7 @@ const Product_Table = () => {
     const searchparam = useRef('')
     const [filterdata,setFilterdata] = useState([])
     useEffect(() => {
-        let unsubscribeData = fetchData()
+        fetchData()
         // console.log("data");
         // return unsubscribeData = null
     }, [])
