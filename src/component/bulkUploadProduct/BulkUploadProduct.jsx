@@ -120,6 +120,7 @@ const BulkUploadProduct = () => {
                 {!loading?<button className={Styles.submitbtn} onClick = {()=>uploadProductImage()}>Upload Image</button>:
                 <ReactLoading type={'bubbles'} color={'green'} height={40} width={150} />}
             </div>
+            
         </div>
         </>
     );

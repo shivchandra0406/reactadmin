@@ -6,6 +6,7 @@ import DateOption from '../../Date/DateOption';
 import InvoiceTemplate from '../Invoice/InvoiceTemplate';
 import '../neworder/NewOrder.module.css'
 import { FiDownload} from 'react-icons/fi';
+import BulkUploadOrderStatus from './BulkUploadOrderStatus'
 
 import writeXlsxFile from 'write-excel-file'
 import schema from './ExcelSchema'
@@ -16,6 +17,7 @@ const OrderHistory = () => {
     const [filterdata,setFilterdata] = useState([])
     const [invoice,setInvoice] =useState(false)
     const [invoicedata,setInvoicedata] =useState({})
+    const [exportExcelFile,setExportExcelFile] = useState(false)
     const [options,setOptions] = useState([
         {label:'Select',value:''},
         {label:'Orderd',value:'Orderd'},{label:'Dispatch',value:'Dispatch'},
@@ -134,6 +136,13 @@ const OrderHistory = () => {
     }
     //Download Excel end
 
+    //close btn start
+    const closeBtn=()=>{
+        setInvoice(false)
+        setExportExcelFile(false)
+    }
+    //close btn end
+
     return (
         <>
         {!invoice?(<div className={Styles.tableMainContainer}>
@@ -141,7 +150,12 @@ const OrderHistory = () => {
                 <div className={Styles.btnWrapper}>
                 <Dropdown data={options} value = {optionValue} onChange = {onChange}/>
                 <Dropdown data={dateOptions} value = {dateOptionValue} onChange = {onChageDate}/>
-                <button className={Styles.excelbtn} onClick={()=>downloadExcel()}>Download Excel</button>    
+                <button className={Styles.excelbtn} onClick={()=>downloadExcel()}>Download Excel</button>  
+                <button className={Styles.excelbtn} onClick={()=>{
+                    setExportExcelFile(true)
+                    setInvoice(true)
+                }
+            } style={{marginLeft:20}}>Export Excel</button>    
             </div>
             <div >
             <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }} id="table-to-xls" >
@@ -200,7 +214,7 @@ const OrderHistory = () => {
         </table>
 
             </div>        
-            </div>):<InvoiceTemplate item={invoicedata} back={back}/>
+            </div>):!exportExcelFile && invoice?<InvoiceTemplate item={invoicedata} back={back}/>:<BulkUploadOrderStatus close={closeBtn}/>
             }
             </>
     );
