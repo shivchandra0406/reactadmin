@@ -78,3 +78,14 @@ span{
     font-size: 16px;
     margin-right: 10px;
 }
+.excelbtn{
+    width:150px;
+    height:35px;
+    font-size:15px;
+    color:#fff;
+    background-color: #1ECBE1;
+    border:none;
+}
+.excelbtn:hover{
+    background-color:#E1341E;
+}

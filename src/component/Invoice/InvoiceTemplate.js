@@ -22,7 +22,7 @@ const InvoiceTemplate = ({item,back}) => {
         <div className={Styles.main_container}>
 
         <button className={Styles.backbtn} onClick={()=>back()}>back</button>
-        <Pdf targetRef={ref} filename="post.pdf" >
+        <Pdf targetRef={ref} filename="orderinvoice.pdf" >
         {({toPdf}) => (
             <button onClick={toPdf}  className={Styles.btnpdf}> 
             Download pdf</button>

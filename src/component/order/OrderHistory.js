@@ -1,10 +1,15 @@
 import React,{useState,useEffect} from 'react';
 import services from '../../http/services';
 import Styles from './order.module.css'
-import GetTableOrderData from './GetTableOrderData';
 import Dropdown from '../DropDown';
 import DateOption from '../../Date/DateOption';
 import InvoiceTemplate from '../Invoice/InvoiceTemplate';
+import '../neworder/NewOrder.module.css'
+import { FiDownload} from 'react-icons/fi';
+
+import writeXlsxFile from 'write-excel-file'
+import schema from './ExcelSchema'
+
 
 const OrderHistory = () => {
     const [data,setData] = useState([])
@@ -115,6 +120,20 @@ const OrderHistory = () => {
     }
     //back function end
 
+    //Download Excel start
+    const downloadExcel = async() =>{
+        await writeXlsxFile(data, {
+            schema,
+            headerStyle: {
+                backgroundColor: '#eeeeee',
+                fontWeight: 'bold',
+                align: 'center'
+              },
+            fileName: 'orderhistory.xlsx'
+          })
+    }
+    //Download Excel end
+
     return (
         <>
         {!invoice?(<div className={Styles.tableMainContainer}>
@@ -122,30 +141,66 @@ const OrderHistory = () => {
                 <div className={Styles.btnWrapper}>
                 <Dropdown data={options} value = {optionValue} onChange = {onChange}/>
                 <Dropdown data={dateOptions} value = {dateOptionValue} onChange = {onChageDate}/>
+                <button className={Styles.excelbtn} onClick={()=>downloadExcel()}>Download Excel</button>    
             </div>
-                <div className={Styles.tableContainer}>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>ID</span></div>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Customer Info</span></div>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Coustomer Address</span></div>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Product Info</span></div> 
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Quantity</span></div>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Price</span></div> 
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Payment</span></div>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Order Status</span></div>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Invoice</span></div> 
-                    </div>
+            <div >
+            <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }} id="table-to-xls" >
+                <tr style={{ height:40,padding:5,textAlign: 'center', fontSize: 14, backgroundColor: 'yellow', }}>
+                    <th ><p>ID</p></th>
+                    <th>Customer Info</th>
+                    <th>Customer Address</th>
+                    <th>Product Info</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Payment</th>
+                    <th>Order Status</th>
+                    <th>Invoice</th>
+                </tr>
                 {
-                 data.length>0? data.map((item, index) => {
-                        //console.log("item ");
+                    data.length > 0 ? data.map(item => {
+                        
                         return (
-
-                            <div className={Styles.tableContainer} key={item._id}>
-                                <GetTableOrderData key={item._id} item={item} onChangeEdit ={()=>downloadPdf(item)} />
-                            </div>
-                        )
-                    }) : <h2>No Any Order Data</h2>
+                            //setBcolor('')
+                            //setBcolor('red')
+            <tr key={item._id} >
+                    <td><p >{item._id}</p></td>
+                    <td >
+                            <p>{item.user?.name}</p>
+                            <p>{item.user?.email}</p>
+                            <p>{item.user?.mobilenumber}</p>
+                    </td>
+                    <td >
+                            <p>{item.user_address?.address_type}</p>
+                            <p>{item.user_address?.area}</p>
+                            <p>{item.user_address?.city}</p>
+                            <p>{item.user_address?.pincode}</p>
+                            <p>{item.user_address?.state}</p>
+                    </td>
+                    <td >
+                            <p>{item.product?._id}</p>
+                            <p>{item.product?.productName}</p>
+                    </td>
+                    <td >{item.qty}</td>
+                    <td >{item.amount}</td>
+                    <td >
+                        <div>
+                            <p>{item.payment_order_id?.payment_info?.razorpay_payment_id}</p>
+                            <p>{item.payment_order_id?.payment_info?.razorpay_order_id}</p>
+                            <p>{item.payment_order_id?.payment_info?.razorpay_signature}</p>
+                        </div>
+                    </td>
+                    <td style={{color:'green'}}><p >{item.order_status}</p></td>
+                    <td style={{color:'green'}}><p ><FiDownload color='red' size={14} width={40} height={30} style={{padding:5+'px',backgroundColor:'#ebf2b3'}} 
+                     onClick={()=>downloadPdf(item)}  
+                    /></p></td>
+            </tr>
+            )
+                    }) : <h2>No Order history</h2>
                 }
-                </div>):<InvoiceTemplate item={invoicedata} back={back}/>
+        </table>
+
+            </div>        
+            </div>):<InvoiceTemplate item={invoicedata} back={back}/>
             }
             </>
     );
