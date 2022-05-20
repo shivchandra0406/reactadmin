@@ -67,12 +67,12 @@ const schema = [
        
     },
     {
-      column: 'Tracking Number',
+      column: 'Tracking Id',
       type: String,
       width: 25,
       color:'#12db22',
       align:'center',
-      value: item => item.trackingNumber
+      value: item => item.trackingId
     },
     {
         column: 'Order Date',
