@@ -60,7 +60,7 @@ const BulkUploadOrderStatus = ({close}) => {
                     <input type="file" name="file" id="file" className={Styles.csvbtn} onChange={onChangeFile} />
                     <label for="file" className={Styles.filelable}>Choose Excel File</label>
                 </div>
-                {!loading?<button className={Styles.submitbtn} onClick = {()=>uploadFile()}>Upload CSV</button>:
+                {!loading?<button className={Styles.submitbtn} onClick = {()=>uploadFile()}>Upload File</button>:
                 <ReactLoading type={'bubbles'} color={'green'} height={40} width={150} />    
                }
             </div>

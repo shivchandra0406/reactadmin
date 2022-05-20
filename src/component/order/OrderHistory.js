@@ -36,6 +36,7 @@ const OrderHistory = () => {
         setOptionValue(e)
     }
     const onChageDate = (e)=>{
+        //console.log(e)
         setDateOptionValue(e)
     }
     const fetchData = async()=>{
@@ -58,7 +59,7 @@ const OrderHistory = () => {
         fetchData()
     },[])
     useEffect(()=>{
-        console.log("option value",optionValue);
+        //console.log("option value",optionValue);
         filteringData()
     },[optionValue])
     useEffect(()=>{
@@ -67,10 +68,35 @@ const OrderHistory = () => {
 
     //filtering data by Order
     const filteringData = () =>{
-        if(optionValue.value === ''){
+        if(optionValue.value === '' || optionValue===''){
             setData(filterdata)
         }else{
-            setData(filterdata.filter(item=>item.order_status===optionValue.value))
+            setData(filterdata.filter((item)=>{
+                console.log(dateOptionValue.value,dateOptionValue==='')
+                if(dateOptionValue == '' || dateOptionValue.value ==='All Data' ){
+                    return item.order_status===optionValue.value
+                }else if(dateOptionValue.value==='24 Hours'){
+                    return item.createdAt>DateOption.now().toISOString() && item.order_status===optionValue.value
+                }else if(dateOptionValue.value==='Yesterday'){
+                    return item.createdAt>DateOption.beforDays().toISOString() && item.order_status===optionValue.value
+                }else if(dateOptionValue.value==='Last 3 days'){
+                    //console.log(item);
+                    return item.createdAt>DateOption.threeDays().toISOString() && item.order_status===optionValue.value
+                }
+                else if(dateOptionValue.value==='last Week'){
+                    return (item.createdAt>DateOption.sevenDays().toISOString()) && item.order_status===optionValue.value
+                }
+                else if(dateOptionValue.value==='last 1 Month'){
+                    return item.createdAt>DateOption.oneMonth().toISOString() && item.order_status===optionValue.value
+                }
+                else if(dateOptionValue.value==='last 6 Month'){
+                    return item.createdAt>DateOption.sixMonth().toISOString() && item.order_status===optionValue.value
+                    
+                }else if(dateOptionValue.value==='last 1 Year'){
+                    return item.createdAt>DateOption.oneYear().toISOString() && item.order_status===optionValue.value
+                }
+            }
+            ))
         }
     }
     //filtering data by date
@@ -81,27 +107,46 @@ const OrderHistory = () => {
         else{
             setData(filterdata.filter(item=>{
                 if(dateOptionValue.value==='24 Hours'){
-                    //console.log(DateOption.now(),item.createdAt);
-                    //console.log("item.createdAt",item.createdAt,DateOption.now().toDateString());
-                    if(item.createdAt>DateOption.now().toISOString())
-                        return item
+                    if(optionValue ==='' || optionValue.value === '')
+                        return item.createdAt>DateOption.now().toISOString()
+                    else
+                        return  item.createdAt>DateOption.now().toISOString() && item.order_status===optionValue.value
                 }else if(dateOptionValue.value==='Yesterday'){
-                    return item.createdAt>DateOption.beforDays().toISOString()
+                    if(optionValue ==='' || optionValue.value === '')
+                        return item.createdAt>DateOption.beforDays().toISOString()
+                    else
+                        return item.createdAt>DateOption.beforDays().toISOString() && item.order_status===optionValue.value
                 }else if(dateOptionValue.value==='Last 3 days'){
                     //console.log(item);
-                    return item.createdAt>DateOption.threeDays().toISOString()
+                    if(optionValue ==='' || optionValue.value === '')
+                        return item.createdAt>DateOption.threeDays().toISOString()
+                    else
+                        return item.createdAt>DateOption.threeDays().toISOString() && item.order_status===optionValue.value
                 }
                 else if(dateOptionValue.value==='last Week'){
-                    return item.createdAt>DateOption.sevenDays().toISOString()
+                    console.log(dateOptionValue.value)
+                    if(optionValue ==='' || dateOptionValue.value === '')
+                        return item.createdAt>DateOption.sevenDays().toISOString()
+                    else
+                        return item.createdAt>DateOption.sevenDays().toISOString() && item.order_status===optionValue.value
                 }
                 else if(dateOptionValue.value==='last 1 Month'){
-                    return item.createdAt>DateOption.oneMonth().toISOString()
+                    if(optionValue ==='' || optionValue.value === '')
+                        return item.createdAt>DateOption.oneMonth().toISOString()
+                    else
+                        return item.createdAt>DateOption.oneMonth().toISOString() && item.order_status===optionValue.value
                 }
                 else if(dateOptionValue.value==='last 6 Month'){
-                    return item.createdAt>DateOption.sixMonth().toISOString()
+                    if(optionValue ==='' || optionValue.value === '')
+                        return item.createdAt>DateOption.sixMonth().toISOString()
+                    else
+                        return item.createdAt>DateOption.sixMonth().toISOString() && item.order_status===optionValue.value
                     
                 }else if(dateOptionValue.value==='last 1 Year'){
-                    return item.createdAt>DateOption.oneYear().toISOString()
+                    if(optionValue === '' || optionValue.value === '')
+                        return item.createdAt>DateOption.oneYear().toISOString()
+                    else
+                        return item.createdAt>DateOption.oneYear().toISOString() && item.order_status===optionValue.value
                 }
             }))
         }

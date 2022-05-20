@@ -33,6 +33,7 @@ const Product = ({item,back}) =>{
         material:"",
         productDescription:"",
         ProductImage:[],
+        productCode:null
     })
     // let imagedata = item.productImage.length>0?item.productImage:[]
     // for(let image of imagedata)
@@ -57,6 +58,7 @@ const Product = ({item,back}) =>{
                     productPrice:item?item.productPrice:"",
                     material:{value:item?item.material?._id:"",lable:item?item.material?.material_type_name:''},
                     productDescription:item?item.productDescription:"",
+                    productCode:item?.productCode
                 }
             })
             //let {bulletPoint1,bulletPoint2,bulletPoint3,bulletPoint4,bulletPoint5} = item.bulletPoints
@@ -149,7 +151,7 @@ const Product = ({item,back}) =>{
         formdata.append('productName',data.productName)
         formdata.append('category',data.category.value)
         formdata.append('subCategory',data.subCategory.value)
-        formdata.append('dashboard_img',data.dashboard_img.value)
+        data.dashboard_img.value && formdata.append('dashboard_img',data.dashboard_img.value)
         formdata.append('productPrice',data.productPrice)
         formdata.append('material',data.material.value)
         formdata.append('bulletPoints[bulletPoint1]',bulletPoints.bulletPoint1)
@@ -158,6 +160,7 @@ const Product = ({item,back}) =>{
         formdata.append('bulletPoints[bulletPoint4]',bulletPoints.bulletPoint4)
         formdata.append('bulletPoints[bulletPoint5]',bulletPoints.bulletPoint5)
         formdata.append('productDescription',data.productDescription)
+        formdata.append('productCode',data.productCode)
         image.map(img=>formdata.append('ProductImage',img))
         try{
             // const config = {     
@@ -237,6 +240,12 @@ const Product = ({item,back}) =>{
               <InputText placeholder="Enter Price" value={data.productPrice} onChange={(e)=>{
                   setData((old)=>{
                       return {...old,productPrice:e.target.value}
+                  })
+              }}/>
+              <p>Enter Product Code</p>
+              <InputText placeholder="Enter Product Code" value={data.productCode} onChange={(e)=>{
+                  setData((old)=>{
+                      return {...old,productCode:e.target.value}
                   })
               }}/>
               <p>Enter Product Description</p>

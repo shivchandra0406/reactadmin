@@ -33,10 +33,10 @@ const User_Table = () => {
     },[page])
 
     //delete product
-    const deleteProduct=async(id)=>{
-        var proceed = window.confirm("Are you sure you want to delete Product?");
+    const deleteAccount=async(id)=>{
+        var proceed = window.confirm("Are you sure you want to delete User Account?");
         if(proceed){
-            let apiname = `product/deleteProduct/${id}`
+            let apiname = "account/deleteUserAccount/"+id
             let result = await services.delete(apiname)
             console.log(result);
             if(result.Status){
@@ -152,7 +152,7 @@ const User_Table = () => {
 
                             <div className={Styles.tableContainer} key={item._id}>
                                 <Table1 key={item._id} item={item} 
-                                onDelete={()=>deleteProduct(item._id)}></Table1>
+                                onDelete={()=>deleteAccount(item._id)}></Table1>
                             </div>
                         )
                     }) : <h2>No Any Product Data</h2>
