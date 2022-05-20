@@ -7,6 +7,7 @@ import InvoiceTemplate from '../Invoice/InvoiceTemplate';
 import '../neworder/NewOrder.module.css'
 import { FiDownload} from 'react-icons/fi';
 import BulkUploadOrderStatus from './BulkUploadOrderStatus'
+import Moment from 'react-moment';
 
 import writeXlsxFile from 'write-excel-file'
 import schema from './ExcelSchema'
@@ -213,6 +214,7 @@ const OrderHistory = () => {
                     <th>Price</th>
                     <th>Payment</th>
                     <th>Order Status</th>
+                    <th>Order Date</th>
                     <th>Invoice</th>
                 </tr>
                 {
@@ -249,6 +251,7 @@ const OrderHistory = () => {
                         </div>
                     </td>
                     <td style={{color:'green'}}><p >{item.order_status}</p></td>
+                    <td style={{color:'green'}}><p ><Moment format='DD/MM/YYYY'>{item.createdAt}</Moment></p></td>
                     <td style={{color:'green'}}><p ><FiDownload color='red' size={14} width={40} height={30} style={{padding:5+'px',backgroundColor:'#ebf2b3'}} 
                      onClick={()=>downloadPdf(item)}  
                     /></p></td>
