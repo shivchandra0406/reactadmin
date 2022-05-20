@@ -6,13 +6,13 @@ const Table = ({item,onChangeEdit,onDelete}) =>{
     const image = item.productImage.length>0?item.productImage[0].productImage:""
     let item_image=''
     if(image!==''){
-        let splitstr = image.split("/")[1]
-        item_image = image.substring(image.indexOf(splitstr))
+        item_image = image.split('/')
+        item_image = item_image[item_image.length-1]
     }
     //console.log("http://51.15.201.39/"+item_image);
     return (
         <>
-        <div className={Styles.table1}><img src={item.productImage.length>0?"http://51.15.201.39:3002/"+item_image:item_image} alt="image"/></div>
+        <div className={Styles.table1}><img src={item.productImage.length>0?"http://51.15.201.39:3002/PinkBox/Sharp/Product/"+item_image:item_image} alt="image"/></div>
         <div className={Styles.table1}><p style={{textAlign:'center'}}>{item.productName}</p></div>
         <div className={Styles.table1}><p>{item.category?.category_name}</p></div>
         <div className={Styles.table1}><p>{item.subCategory?.subcategory_name}</p></div>
