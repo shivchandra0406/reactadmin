@@ -6,6 +6,7 @@ import services from '../../http/services'
 import Dropdown from '../DropDown';
 
 
+
 const User_Table = () => {
 
     const [data, setData] = useState([])
@@ -19,7 +20,7 @@ const User_Table = () => {
     const [optionValue,setOptionValue] = useState('')
     //const [page,setPage] = useState(0)
     useEffect(() => {
-        let unsubscribeData = fetchData()
+        fetchData()
         // console.log("data");
         // return unsubscribeData = null
     }, [])

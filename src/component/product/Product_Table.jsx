@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Styles from './ProductTable.module.css'
 import Product from './Product'
-import Table from './Table'
 import services from '../../http/services'
 import { IoMdAdd} from 'react-icons/io';
+import '../neworder/NewOrder.module.css'
+import { AiFillEdit,AiFillDelete } from 'react-icons/ai';
+import Dropdown from '../DropDown';
 
 
 
@@ -14,6 +16,7 @@ import { IoMdAdd} from 'react-icons/io';
 // <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Bullet Point5</p></div>
 
 const Product_Table = () => {
+    const [allData,setAllData] = useState([])
     const [data, setData] = useState([])
     const [editState,setEditState] = useState(false)
     const [singledata,setSingleData] = useState({})
@@ -21,6 +24,11 @@ const Product_Table = () => {
     const [rerender,setRerender] = useState(false)
     const searchparam = useRef('')
     const [filterdata,setFilterdata] = useState([])
+    const limitdata = 15
+    let [totalPage,setTotalPage] = useState(0)
+    const [page,setPage] = useState(0)
+    const [options,setOptions] = useState([])
+    const [optionValue,setOptionValue] = useState('')
     useEffect(() => {
         fetchData()
         // console.log("data");
@@ -30,7 +38,14 @@ const Product_Table = () => {
     useEffect(()=>{
         fetchData()
     },[rerender])
-
+     
+    //chnaging page run useEffect 
+     useEffect(()=>{
+        let start = limitdata*page,end=(limitdata*page)+limitdata
+        let slicedata = allData.slice(start,end)
+        setData(slicedata)
+        setFilterdata(slicedata)
+    },[page])
     const onChangeEdit = (item) =>{
         //console.log("onchange",item);
         setEditState(true)
@@ -58,6 +73,33 @@ const Product_Table = () => {
         setAddProduct(false)
         setRerender(!rerender)
     }
+
+    const designSelector = (allItem) =>{
+        let len = allItem.length
+        let div = len/limitdata,t
+        //console.log("div",div);
+        if(Number.isInteger(div))
+        { 
+            t=div-1
+            setTotalPage(div-1)
+        }
+        else{
+            t=Math.floor(div+1)
+            setTotalPage(t)
+        }
+        console.log(totalPage);
+        let optiondata = []
+        for (let i=0;i<t;i++){
+            optiondata.push({label:`page ${i}`,value:i})
+        }
+        setOptions(optiondata)
+    }
+    
+    const onChange = (event) =>{
+        setOptionValue(event)
+        setPage(event.value)
+    }
+
     const fetchData = async () => {
         try {
             const apiname = "product/getAllProduct"
@@ -66,8 +108,11 @@ const Product_Table = () => {
             // alert(result.Status)
             console.log("result---->", result);
             if (result.Status === true) {
-                setData(result.data)
-                setFilterdata(result.data)
+                setAllData(result.data)
+                let slicedata = result.data.slice(page,limitdata)
+                setData(slicedata)
+                setFilterdata(slicedata)
+                designSelector(result.data)
                 //console.log("ser data",data);
             }
             else {
@@ -112,31 +157,61 @@ const Product_Table = () => {
                     border:0,
                     borderRadius:10
                 }}><IoMdAdd color='white'/>Add</button>
+                  <button className={Styles.paginationbtn} onClick={()=>{
+                    console.log("previous",page);
+                    if(page==0){
+                        return
+                    }else{
+                        setPage(page-1)
+                    }
+                }}>{"<"} Previous</button>
+                  <Dropdown value={optionValue} data={options} onChange={onChange} />
+                  <button className={Styles.paginationbtn} onClick={()=>{
+                    if(page<totalPage)   
+                        setPage(page+1)
+                       console.log(page,totalPage);
+                   }}>Next {">"} </button>
                   </div>
                 <div className={Styles.wraptable}>
-                <div className={Styles.tableContainer}>
-                <div className={Styles.table}><p style={{fontSize:10,color:'green',textAlign:'center'}}>Product Image</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Product Name</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Category Name</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>SubCategory Name</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>DashBoard Image Name</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Price</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Description</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Action</p></div>
-                </div>
+                <table style={{ width: '100%',borderCollapse: 'collapse', rowGap: 1,overflowX:'scroll',overflowY:'scroll',height:'100%' }}>
+                <tr style={{ height:40,padding:5,textAlign: 'center', fontSize: 14, backgroundColor: 'yellow', }}>
+                      <th>ID</th>
+                      <th>Product Image</th>
+                      <th>Product Name</th>
+                      <th>Category Name</th>
+                      <th>SubCaegory Name</th>
+                      <th>DashBoard Img Name</th>
+                      <th>Material Name</th>
+                      <th>Price</th>
+                      <th style={{width:80}}>Action</th>
+                   </tr>
                 {
                     data.length>0? data.map((item, index) => {
                         //console.log("item ");
+                        let img='';
+                        if(item.productImage?.length>0){
+                            let image = item.productImage[0]?.productImage
+                            image = image.split('/')
+                            img = image[image.length-1]
+                        }
                         return (
-
-                            <div className={Styles.tableContainer} key={item._id}>
-                                <Table key={item._id} item={item} 
-                                onChangeEdit={()=>{
-                                    onChangeEdit(item)}} onDelete={()=>deleteProduct(item._id)}></Table>
-                            </div>
+                            <tr key={index}>
+                                <td>{item?item._id:''}</td>
+                                <td><img src={img?"http://51.15.201.39:3002/PinkBox/Sharp/Product/"+img:''} alt="image" style={{width:90,height:25}}/></td>
+                                <td style={{textOverflow:'ellipsis'}}>{item.productName} </td>
+                                <td>{item.category?.category_name}</td>
+                                <td>{item.subCategory?.subcategory_name}</td>
+                                <td>{item.dashboard_img?.dashboard_name}</td>
+                                <td>{item.material?.material_type_name}</td>
+                                <td>{item.productPrice}</td>
+                                <td><AiFillEdit color='red' size={14} width={30} height={20} style={{padding:5+'px',backgroundColor:'#ebf2b3'}} onClick={
+                                   ()=>onChangeEdit(item)}/>
+                                <AiFillDelete color='red' size={14} width={30} height={20}  style={{ padding:5,marginLeft:10+'px',backgroundColor:'#ebf2b3'}} onClick={()=>deleteProduct(item._id)}/></td>
+                            </tr>   
                         )
                     }) : <h2>No Any Product Data</h2>
                 }
+            </table>
             </div>
         </div>):(addProduct===false && editState===true?<Product item={editState?singledata:''} back={back}/>:<Product back={back}/>)
     }

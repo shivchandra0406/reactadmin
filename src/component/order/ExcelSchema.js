@@ -63,8 +63,7 @@ const schema = [
         width: 25,
         color:'#12db22',
         align:'center',
-        value: item => item.order_status
-       
+        value: item => item.order_status       
     },
     {
       column: 'Tracking Id',
@@ -80,8 +79,7 @@ const schema = [
         format: 'dd/mm/yyyy',
         width: 25,
         align:'center',
-        value: item => new Date(item.createdAt)
-       
+        value: item => new Date(item.createdAt)       
     }
   ]
 
