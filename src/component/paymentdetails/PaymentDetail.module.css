@@ -1,0 +1,16 @@
+.filtercontainer{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.searchtxt{
+    width: 250px;
+    height: 30px;
+    padding-left: 10px;
+    font-size: 15px;
+    border-color: rgb(104, 104, 247);
+    outline: none;
+}

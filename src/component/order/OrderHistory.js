@@ -25,7 +25,7 @@ const OrderHistory = () => {
         {label:'Transit',value:'Transit'},{label:'Delivered',value:'Delivered'}
     ])
     const [dateOptions,setDateOptions] = useState([
-        {label:'Select',value:'All Data'},{label:'24 Hours',value:'24 Hours'},
+        {label:'Select',value:''},{label:'24 Hours',value:'24 Hours'},
         {label:'Yesterday',value:'Yesterday'},{label:'Last 3 days',value:'Last 3 days'},
         {label:'last Week',value:'last Week'},{label:'last 1 Month',value:'last 1 Month'},
         {label:'last 6 Month',value:'last 6 Month'},{label:'last 1 Year',value:'last 1 Year'}   

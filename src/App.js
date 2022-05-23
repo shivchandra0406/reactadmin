@@ -12,6 +12,7 @@ import GetSubCatData from "./component/subcategory/GetSubCatData";
 import GetDashBoardImage from "./component/dashboardimage/GetDashBoardImage";
 import GetMaterial from "./component/material/GetMaterial";
 import BulkUploadProduct from "./component/bulkUploadProduct/BulkUploadProduct";
+import Payment from "./component/paymentdetails/Payment";
 const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
 
@@ -25,6 +26,7 @@ const App = () => (
     <Resource name="Materials" list={GetMaterial}/>
     <Resource name="Order" list={OrderHistory}/>
     <Resource name='BulkUploadProduct' list ={BulkUploadProduct}/>
+    <Resource name='PaymentDetails' list={Payment}/>
   </Admin>
 );
 
