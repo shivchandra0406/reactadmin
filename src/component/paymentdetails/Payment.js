@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect, useRef} from 'react';
 import Styles from './PaymentDetail.module.css'
 import '../neworder/NewOrder.module.css'
 import services from '../../http/services';
@@ -16,6 +16,7 @@ const Payment = () => {
         {label:'last 6 Month',value:'last 6 Month'},{label:'last 1 Year',value:'last 1 Year'}   
     ])
     const [dateOptionValue,setDateOptionValue] = useState('')
+    const searchparams = useRef('')
 
     const onChageDate = (e)=>{
         //console.log(e)
@@ -61,7 +62,7 @@ const Payment = () => {
         filteringData()
     },[dateOptionValue])
 
-    const fetchData = async(req,res) =>{
+    const fetchData = async() =>{
         try{
             let apiname = 'product/getPaymentDetails'
             let result = await services.get(apiname)
@@ -80,13 +81,32 @@ const Payment = () => {
     useEffect(()=>{
         fetchData()
     },[])
+//item.user?.name.toLowerCase().includes(searchparams.current.value.toLowerCase())|| 
+    //Search data filter start
+    const searchFilterData = () =>{
+        console.log(searchparams.current.value);
+        if(searchparams.current.value === ''){
+            setData(filterdata)
+        }else{
+            setData(filterdata.filter(item=>{
+                if(
+                    item.payment_info?.razorpay_payment_id.toLowerCase().includes(searchparams.current.value.toLowerCase())
+                ){
+                    return item
+                }
+            }))
+        }
+    }
+
+    //search data filter end
     return (
         <div className={Styles.container}>
             <h2> All Payment Details </h2>
             <div className={Styles.filtercontainer}>
               <p style={{fontSize:14,color:'GrayText',marginRight:10}}>Search Payment Details with user name and paymentId</p>
-              <input type="text" className={Styles.searchtxt} placeholder="Type here...." />
+              <input ref={searchparams} type="text" className={Styles.searchtxt} placeholder="Type here...."  onChange={searchFilterData}/>
               <Dropdown data={dateOptions} value = {dateOptionValue} onChange = {onChageDate}/>
+
               </div>
             <div className={Styles.tableContainer}>
             <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
