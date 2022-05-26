@@ -12,7 +12,6 @@ import Moment from 'react-moment';
 import writeXlsxFile from 'write-excel-file'
 import schema from './ExcelSchema'
 
-
 const OrderHistory = () => {
     const [data,setData] = useState([])
     const [filterdata,setFilterdata] = useState([])
@@ -231,8 +230,8 @@ const OrderHistory = () => {
                             <p>{item.user?.mobilenumber}</p>
                     </td>
                     <td >
-                            <p>{item.user_address?.address_type}</p>
-                            <p>{item.user_address?.area}</p>
+                            <p>{item.user_address?.name}</p>
+                            <p>{item.user_address?.address1}</p>
                             <p>{item.user_address?.city}</p>
                             <p>{item.user_address?.pincode}</p>
                             <p>{item.user_address?.state}</p>

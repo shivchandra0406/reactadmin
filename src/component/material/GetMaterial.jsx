@@ -14,6 +14,8 @@ const GetMaterial = () => {
     const [addsingle,setAddsingle] = useState(false)
     const serchparam = useRef('')
     const [filterdata,setFilterdata] = useState(false)
+    
+    
     const onChangeEdit = (item)=>{
         //console.log('item--->',item);
         setEdit(true)
@@ -42,10 +44,14 @@ const GetMaterial = () => {
         let confirm = window.confirm('Are you sure you want to delte material data')
         if(confirm){
             try{
+                setData(data.filter(item=>{
+                    console.log(item)
+                    return  item._id!==id
+                }))
                 let result = await services.delete(apiname)
                 if(result.Status){
-                    setData(data.filter(item=>item._id!==id))
                     alert(result.message)
+                
                 }else{
                     alert(result.message)
                 }
@@ -76,6 +82,7 @@ const GetMaterial = () => {
         }
         fetchData()
     }, []);
+    
     return (
         <>
         {!edit?<div className="tableMainContainer">
@@ -113,7 +120,7 @@ const GetMaterial = () => {
                         )
                     }) : <h2>No Any Product Data</h2>
                 }
-                </div>:<AddMaterial item={editdata} back={back}/>}
+                </div>:!addsingle && edit?<AddMaterial item={editdata} back={back}/>:<AddMaterial back={back}/>}
             </>
     );
 }

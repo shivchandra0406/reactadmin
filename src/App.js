@@ -13,9 +13,11 @@ import GetDashBoardImage from "./component/dashboardimage/GetDashBoardImage";
 import GetMaterial from "./component/material/GetMaterial";
 import BulkUploadProduct from "./component/bulkUploadProduct/BulkUploadProduct";
 import Payment from "./component/paymentdetails/Payment";
+//import Login from "./component/login/Login";
+import TaxManagement from "./component/taxmanagement/TaxManagement";
 const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
-
+const auth = false
 const App = () => (
   <Admin dashboard={Dashboard} dataProvider={dataProvider}>
     <Resource name='User' list ={User_Table}/>
@@ -27,6 +29,7 @@ const App = () => (
     <Resource name="Order" list={OrderHistory}/>
     <Resource name='BulkUploadProduct' list ={BulkUploadProduct}/>
     <Resource name='PaymentDetails' list={Payment}/>
+    <Resource name="TaxManagement" list={TaxManagement}/>
   </Admin>
 );
 

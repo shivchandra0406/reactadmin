@@ -6,6 +6,7 @@ import { IoMdAdd} from 'react-icons/io';
 import '../neworder/NewOrder.module.css'
 import { AiFillEdit,AiFillDelete } from 'react-icons/ai';
 import Dropdown from '../DropDown';
+import ReactLoading from 'react-loading';
 
 
 
@@ -29,6 +30,8 @@ const Product_Table = () => {
     const [page,setPage] = useState(0)
     const [options,setOptions] = useState([])
     const [optionValue,setOptionValue] = useState('')
+    const [loading,setLoading] = useState(0)
+    
     useEffect(() => {
         fetchData()
         // console.log("data");
@@ -36,6 +39,7 @@ const Product_Table = () => {
     }, [])
 
     useEffect(()=>{
+        setLoading(true)
         fetchData()
     },[rerender])
      
@@ -113,6 +117,7 @@ const Product_Table = () => {
                 setData(slicedata)
                 setFilterdata(slicedata)
                 designSelector(result.data)
+                setLoading(false)
                 //console.log("ser data",data);
             }
             else {
@@ -186,7 +191,7 @@ const Product_Table = () => {
                       <th style={{width:80}}>Action</th>
                    </tr>
                 {
-                    data.length>0? data.map((item, index) => {
+                    !loading?data.length>0? data.map((item, index) => {
                         //console.log("item ");
                         let img='';
                         if(item.productImage?.length>0){
@@ -209,7 +214,7 @@ const Product_Table = () => {
                                 <AiFillDelete color='red' size={14} width={30} height={20}  style={{ padding:5,marginLeft:10+'px',backgroundColor:'#ebf2b3'}} onClick={()=>deleteProduct(item._id)}/></td>
                             </tr>   
                         )
-                    }) : <h2>No Any Product Data</h2>
+                    }) : <h2>No Any Product Data</h2>:<ReactLoading type={'bubbles'} color={'green'} height={40} width={150} /> 
                 }
             </table>
             </div>
@@ -242,7 +247,8 @@ export default Product_Table
 //                 <TextField source="productPrice" value={item.productPrice}/>
 //                 <TextField source="productOffer" value={item.productOffer}/>
 //                 <TextField source="productQty" value={item.productQty} />
-//                 <TextField source="productOriginCountry" value={item.productOriginCountry} />
+//                 <TextField source="productOriginCountry" value={item.product
+//                 OriginCountry} />
 //                 <TextField source="productCode" value={item.productCode}/>
 //                 <TextField source="productDescription" value={item.productDescription}/>
 //             </Datagrid>

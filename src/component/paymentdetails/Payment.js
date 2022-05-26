@@ -90,6 +90,7 @@ const Payment = () => {
         }else{
             setData(filterdata.filter(item=>{
                 if(
+                    item.user?.name.toLowerCase().includes(searchparams.current.value.toLowerCase()) || 
                     item.payment_info?.razorpay_payment_id.toLowerCase().includes(searchparams.current.value.toLowerCase())
                 ){
                     return item
@@ -123,7 +124,10 @@ const Payment = () => {
                     data.length>0?data.map(item=>{
                         return <tr>
                             <th>{item._id}</th>
-                            <th>{item.user?.name}</th>
+                            <th>
+                                <p>{item.user?.name}</p>
+                                <p>{item.user?.mobilenumber}</p>
+                            </th>
                             <th><Moment format='DD/MM/YYYY'>{item.createdAt}</Moment></th>
                             <th>{item.total_item}</th>
                             <th style={{letterSpacing:1}}>{item.totalamount}</th>
