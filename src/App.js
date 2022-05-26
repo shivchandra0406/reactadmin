@@ -15,6 +15,7 @@ import BulkUploadProduct from "./component/bulkUploadProduct/BulkUploadProduct";
 import Payment from "./component/paymentdetails/Payment";
 //import Login from "./component/login/Login";
 import TaxManagement from "./component/taxmanagement/TaxManagement";
+import DeliveryCharges from "./component/deliveryCharges/DeliveryCharges";
 const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
 const auth = false
@@ -30,6 +31,7 @@ const App = () => (
     <Resource name='BulkUploadProduct' list ={BulkUploadProduct}/>
     <Resource name='PaymentDetails' list={Payment}/>
     <Resource name="TaxManagement" list={TaxManagement}/>
+    <Resource name="DeliveryCharges" list={DeliveryCharges}/>
   </Admin>
 );
 

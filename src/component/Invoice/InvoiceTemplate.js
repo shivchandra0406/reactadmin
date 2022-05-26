@@ -51,23 +51,10 @@ const InvoiceTemplate = ({item,back}) => {
                     <div className={Styles.Bill_container}>
                         <div className={Styles.bill_details}>
                             <p style={{ fontSize: 14, fontWeight: 600 }}>BILL TO/SHIP TO:</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>{item?item.user?.name:'user'}</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>{item?item.user_address?.address_type:''}</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>{item?item.user_address.area:''},{item?item.user_address.city:''}</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>{item?item.user_address.state:''},{item?item.user_address?.pincode:''}</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>Phone: {item?item.user_address?.contactnumber:''},{item?item.user?.mobilenumber:""}</p>
-                        </div>
-                        <div className={Styles.address_details}>
-                            <p style={{ fontSize: 14, fontWeight: 600 }}>BILL FROM:</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>Pink Box Jwewls Pvt. Ltd.</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>2nd Floor, 13-31-2, LB Nagar,</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>Near west railway station,</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>Tirupati,Andhra Pardesh. 517501</p>
-                            <p style={{ fontSize: 14, fontWeight: 600 }}>SHIP FROM</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>Pink Box Jewels Pvt. Ltd.</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>1st Floor, Above Pure O Natural,</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>p & T colony Road,Sai Baba Temple Road,</p>
-                            <p style={{ fontSize: 13, textTransform: 'capitalize' }}>Dislukhnagar, Hyderabad,Telangana 500060</p>
+                            <p style={{ fontSize: 13, textTransform: 'capitalize'}}>{item?item.user_address?.name:''}</p>
+                            <p style={{ fontSize: 13, textTransform: 'capitalize'}}>{item?item.user_address.address1:''},{item?item.user_address.address2:''}</p>
+                            <p style={{ fontSize: 13, textTransform: 'capitalize'}}>{item?item.user_address.state:''},{item?item.user_address?.pincode:''}</p>
+                            <p style={{ fontSize: 13, textTransform: 'capitalize'}}>Phone: {item?item.user_address?.contactnumber:''},{item?item.user?.mobilenumber:""}</p>
                         </div>
                     </div>
                     <div className={Styles.declaration}>

@@ -213,6 +213,7 @@ const OrderHistory = () => {
                     <th>Price</th>
                     <th>Payment</th>
                     <th>Order Status</th>
+                    <th>Tracking Id</th>
                     <th>Order Date</th>
                     <th>Invoice</th>
                 </tr>
@@ -232,6 +233,7 @@ const OrderHistory = () => {
                     <td >
                             <p>{item.user_address?.name}</p>
                             <p>{item.user_address?.address1}</p>
+                            <p>{item.user_address?.address2}</p>
                             <p>{item.user_address?.city}</p>
                             <p>{item.user_address?.pincode}</p>
                             <p>{item.user_address?.state}</p>
@@ -250,6 +252,7 @@ const OrderHistory = () => {
                         </div>
                     </td>
                     <td style={{color:'green'}}><p >{item.order_status}</p></td>
+                    <td style={{color:'green'}}><p >{item.trackingId}</p></td>
                     <td style={{color:'green'}}><p ><Moment format='DD/MM/YYYY'>{item.createdAt}</Moment></p></td>
                     <td style={{color:'green'}}><p ><FiDownload color='red' size={14} width={40} height={30} style={{padding:5+'px',backgroundColor:'#ebf2b3'}} 
                      onClick={()=>downloadPdf(item)}  
