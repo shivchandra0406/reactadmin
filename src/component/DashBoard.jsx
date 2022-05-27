@@ -1,5 +1,12 @@
 import * as React from "react"
 
-export const Dashboard = ()=><h1>This is the dashboard</h1>
+export const Dashboard = ()=>{
+
+    return(
+        <div>
+            <h2 style={{textAlign:'center',color:'#3496f7'}}>Welcome To PinkBox Admin DashBoard</h2>
+        </div>
+    )
+}
 
  

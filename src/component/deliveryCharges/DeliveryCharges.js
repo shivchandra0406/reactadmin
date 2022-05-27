@@ -9,13 +9,16 @@ const DeliveryCharges = () => {
     const [addData,setAddData] = useState(false)
     const [data,setData] = useState([])
     const [editData,setEditData] = useState({})
+    const [close,setClose] = useState(false)
     const addFunction = () =>{
         setAddData(true)
     }
     const closeFunction = () =>{
         setAddData(false)
         setEditData({})
+        setClose(!close)
     }
+    
     const fetchData = async() =>{
         try{
             let apiname = 'account/getDeliveryCharges'
@@ -32,6 +35,11 @@ const DeliveryCharges = () => {
     useEffect(()=>{
         fetchData()
     },[])
+
+    //close time call data
+    useEffect(()=>{
+        fetchData()
+    },[close])
 
     //Onchange Edit start
     const onChangeEdit = (item) => {
@@ -50,13 +58,15 @@ const DeliveryCharges = () => {
                 <div>
                 <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
                         <tr style={{ height:40,padding:5,textAlign: 'center', fontSize: 14, backgroundColor: 'yellow'}}>
-                            <th>COUNTRY NAME</th>
+                           <th>Index</th>    
+                           <th>COUNTRY NAME</th>
                             <th>CHARGES</th>
                             <th>Action</th>
                         </tr>
                         {
-                        data.length!==0?data.map(item=>{
+                        data.length!==0?data.map((item,index)=>{
                             return<tr>
+                                <td>{index+1}</td>
                                 <td>{item.country_name}</td>
                                 <td>{item.charges}</td>
                                 <td><AiFillEdit color='red' size={14} width={30} height={20} style={{padding:10+'px',backgroundColor:'#ebf2b3'}} onClick={

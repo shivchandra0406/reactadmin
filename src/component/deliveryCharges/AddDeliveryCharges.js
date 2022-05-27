@@ -27,12 +27,12 @@ const AddDeliveryCharges = ({close,item}) => {
         try{
             let apiname = 'account/addDeliveryCharges'
             if(Object.keys(item).length===0){
-                alert(data.county_name)
+                //alert(data.county_name)
                 if(data.country_name || data.charges){
                     let result = await services.postwithoutimage(apiname,data)
                     console.log(result);
                     if(result.Status){
-                        //alert('Added Successfully')
+                        alert('Added Successfully')
                         setData({county_name:'',charges:''})
                     }else{
                         alert(result.message)
@@ -77,7 +77,7 @@ const AddDeliveryCharges = ({close,item}) => {
                 <p className={Styles.ptext}>Select Country</p>
                 <Dropdown data={optionalData} onChange={onChange} value={optionalValue} defaultValue={optionalValue}/>
                 <p className={Styles.ptext}>Enter Delivery Charges</p>
-                <input type="text" placeholder='Enter CGST' className={Styles.inputText} value={data.charges} onChange={(e)=>{
+                <input type="text" placeholder='Enter Charges' className={Styles.inputText} value={data.charges} onChange={(e)=>{
                     setData(old=>{
                         return {...old,charges:e.target.value}
                     })

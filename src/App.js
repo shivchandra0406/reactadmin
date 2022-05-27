@@ -16,6 +16,7 @@ import Payment from "./component/paymentdetails/Payment";
 //import Login from "./component/login/Login";
 import TaxManagement from "./component/taxmanagement/TaxManagement";
 import DeliveryCharges from "./component/deliveryCharges/DeliveryCharges";
+import Faq from "./component/faq/Faq";
 const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
 const auth = false
@@ -32,6 +33,7 @@ const App = () => (
     <Resource name='PaymentDetails' list={Payment}/>
     <Resource name="TaxManagement" list={TaxManagement}/>
     <Resource name="DeliveryCharges" list={DeliveryCharges}/>
+    <Resource name="Faq" list={Faq}/>
   </Admin>
 );
 
