@@ -1,61 +1,62 @@
-import React,{useState,useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import '../subcategory/GetSubCatData.module.css';
 import services from '../../http/services';
-import GetTableMaterial from './GetTableMaterial';
+import '../neworder/NewOrder.module.css'
 import AddMaterial from './AddMaterial'
-import { IoMdAdd} from 'react-icons/io';
+import { IoMdAdd } from 'react-icons/io';
+import { AiFillEdit,AiFillDelete } from 'react-icons/ai';
 
 const GetMaterial = () => {
 
-    const [data,setData] = useState([])
-    const [edit,setEdit] = useState(false)
-    const [editdata,setEditdata] = useState({})
-    const [addsingle,setAddsingle] = useState(false)
+    const [data, setData] = useState([])
+    const [edit, setEdit] = useState(false)
+    const [editdata, setEditdata] = useState({})
+    const [addsingle, setAddsingle] = useState(false)
     const serchparam = useRef('')
-    const [filterdata,setFilterdata] = useState(false)
-    
-    
-    const onChangeEdit = (item)=>{
+    const [filterdata, setFilterdata] = useState(false)
+
+
+    const onChangeEdit = (item) => {
         //console.log('item--->',item);
         setEdit(true)
         setEditdata(item)
-        
+
     }
-    const filterFunction =()=>{
-        console.log('serparams',serchparam.current.value)
-        if(serchparam.current.value===''){
+    const filterFunction = () => {
+        console.log('serparams', serchparam.current.value)
+        if (serchparam.current.value === '') {
             setData(filterdata)
-        }else{
-            setData(data.filter((item)=>{
-                if(item.material_type_name.toLowerCase().includes(serchparam.current.value.toLowerCase())){
+        } else {
+            setData(data.filter((item) => {
+                if (item.material_type_name.toLowerCase().includes(serchparam.current.value.toLowerCase())) {
                     return item
                 }
             }))
         }
     }
 
-    const back = ()=>{
+    const back = () => {
         setEdit(false)
         setAddsingle(false)
     }
-    const onDelete = async(id)=>{
-        let apiname = 'product/deleteMaterialData/'+id
+    const onDelete = async (id) => {
+        let apiname = 'product/deleteMaterialData/' + id
         let confirm = window.confirm('Are you sure you want to delte material data')
-        if(confirm){
-            try{
-                setData(data.filter(item=>{
+        if (confirm) {
+            try {
+                setData(data.filter(item => {
                     console.log(item)
-                    return  item._id!==id
+                    return item._id !== id
                 }))
                 let result = await services.delete(apiname)
-                if(result.Status){
+                if (result.Status) {
                     alert(result.message)
-                
-                }else{
+
+                } else {
                     alert(result.message)
                 }
-            }catch(err){
+            } catch (err) {
                 console.log(err);
                 alert(err.message)
             }
@@ -63,65 +64,82 @@ const GetMaterial = () => {
     }
 
     useEffect(() => {
-        const fetchData = async()=>{
+        const fetchData = async () => {
             const apiname = "product/getMaterialData"
-            try{
+            try {
                 const result = await services.get(apiname)
-                if(result.Status===true){
+                if (result.Status === true) {
                     setData(result.data)
                     setFilterdata(result.data)
                     console.log(result);
-                }else{
+                } else {
                     console.log(result);
                     alert(result.message)
                 }
-            }catch(err){
+            } catch (err) {
                 console.log(err);
                 alert(err.message)
             }
         }
         fetchData()
     }, []);
-    
+
     return (
         <>
-        {!edit?<div className="tableMainContainer">
-                <h2>All Material Data</h2>
-                <div className='btnWrapper'>
-                    <p>Search Product</p>
-                    <input ref={serchparam} type='text' placeholder='serach product' className='inputtext' onChange={filterFunction}/>
-                    <button onClick={()=>{
+            {!edit ? <div className="tableMainContainer">
+                <h2 style={{textAlign:'center'}}>All Material Data</h2>
+                <div style={{marginBottom:20,marginTop:10}}>
+                    <p style={{color:'Highlight',marginBottom:3}}>Search Material</p>
+                    <input ref={serchparam} type='text' placeholder='serach material' onChange={filterFunction} style={{
+                        width:250,
+                        height:30,
+                        borderRadius:5,
+                        outline:'none',
+                        paddingLeft:10
+                        }}/>
+                    <button onClick={() => {
                         setAddsingle(true)
                         setEdit(true)
                     }}
-                    style={{
-                      width:90,
-                      height:30,
-                      background:'#04b023',
-                      color:'white',
-                      marginLeft:15,
-                      outlineColor:'white',
-                      border:0,
-                      borderRadius:10
-                  }}><IoMdAdd color='white'/>Add</button></div>
+                        style={{
+                            width: 90,
+                            height: 30,
+                            background: '#04b023',
+                            color: 'white',
+                            marginLeft: 15,
+                            outlineColor: 'white',
+                            border: 0,
+                            borderRadius: 10
+                        }}><IoMdAdd color='white' />Add</button></div>
                 <div className="tableContainer">
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>ID</span></div>
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>Material Name</span></div>
-                    <div className="table"><span style={{fontSize:18,color:'green'}}>Action</span></div>
-                </div>
-                {
-                 data.length>0? data.map((item, index) => {
-                        //console.log("item ");
-                        return (
+                    <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
+                        <tr style={{ height:40,padding:5,textAlign: 'center', fontSize: 14, backgroundColor: 'yellow'}}>
+                            <th>Index</th>
+                            <th>ID</th>
+                            <th>Material Name</th>
+                            <th>Action</th>
+                        </tr>
 
-                            <div className="tableContainer" key={item._id}>
-                                <GetTableMaterial key={item._id} item={item} onChangeEdit ={()=>onChangeEdit(item)} onDelete={()=>onDelete(item._id)}/>
-                            </div>
-                        )
-                    }) : <h2>No Any Product Data</h2>
-                }
-                </div>:!addsingle && edit?<AddMaterial item={editdata} back={back}/>:<AddMaterial back={back}/>}
-            </>
+                        {
+                            data.length > 0 ? data.map((item, index) => {
+                                //console.log("item ");
+                                return (
+                                    <tr>
+                                        <td>{index}</td>
+                                        <td>{item._id}</td>
+                                        <td>{item.material_type_name}</td>
+                                        <td><p>
+                                            <AiFillEdit color='#fff' size={16} width={30} height={25} style={{ padding:7+ 'px', backgroundColor: '#5276f7' }} onClick={
+                                              ()=>onChangeEdit(item)} />
+                                            <AiFillDelete color='red' size={16} width={30} height={25} style={{ padding:7, marginLeft: 10 + 'px', backgroundColor: '#c9c9c9' }} onClick={()=>onDelete(item._id)} /></p></td>
+                                    </tr>
+                                )
+                            }) : <h2>No Any Product Data</h2>
+                        }
+                    </table>
+                </div>
+            </div> : !addsingle && edit ? <AddMaterial item={editdata} back={back} /> : <AddMaterial back={back} />}
+        </>
     );
 }
 

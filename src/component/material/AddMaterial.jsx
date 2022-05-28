@@ -53,17 +53,18 @@ const AddMaterial = ({item,back}) => {
    
     return (
         <div className={Styles.container}>
-            <h2>Add Material Data</h2>
+            <h3 style={{textAlign:'center'}}>Add Material Data</h3>
             <div className={Styles.bckbtn_container}>
-            <button  onClick={()=>back()}
-            style={{width:100,height:30,textAlign:"center",fontSize:16,backgroundColor:"white",borderRadius:10}}>
-             <span style={{textAlignLast:'center'}}><BiArrowBack color='green'/></span> Back
+            <button  onClick={()=>back()} className={Styles.backbutton}>
+             <span style={{textAlignLast:'center'}}><BiArrowBack color='#fff' size={14}/></span> Back
             </button>
             </div>
-            <p>Enter Material Title</p>
+            <div className={Styles.formcontainer}>
+            <p style={{color:'Highlight',marginBottom:3}}>Enter Material Title</p>
            <InputText placeholder={'Enter Material Name'} value={data} onChange={(e)=>setData(e.target.value)}/>
            <input type="button" className={Styles.button_container} value={item?'Update':'Add'} onClick={onSubmint}/>
-        </div>
+           </div>
+           </div>
     );
 }
 

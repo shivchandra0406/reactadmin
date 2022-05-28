@@ -37,6 +37,9 @@ const AddCategory = ({item,back}) => {
                 let result = services.put(apiname,formdata,true)
                 if(result.Status){
                     console.log("update data",result);
+                    setData('')
+                    setImage('')
+                    setBimage('')
                     alert('update Successfully')
                 }else{
                     alert(result.message)
@@ -45,7 +48,10 @@ const AddCategory = ({item,back}) => {
             else{
                 const result = await services.post(apiname,formdata,true)
                 if(result.Status===true){
-                    alert('success')
+                    alert('Added Successfully')
+                    setData('')
+                    setImage('')
+                    setBimage('')
                 }else{
                     console.log(result);
                     alert(result.message)
@@ -58,25 +64,25 @@ const AddCategory = ({item,back}) => {
     }
     return (
         <div className={Styles.container}>
-            <h2>Add Category</h2>
+            <h3 style={{textAlign:'center',textTransform:'uppercase',letterSpacing:1}}>Add Category</h3>
             <div className={Styles.bckbtn_container}>
-            <button  onClick={()=>back()}
-            style={{width:100,height:30,textAlign:"center",fontSize:16,backgroundColor:"white",borderRadius:10}}>
-             <span style={{textAlignLast:'center'}}><BiArrowBack color='green'/></span> Back
+            <button  onClick={()=>back()} className={Styles.bckbutton}>
+             <span style={{textAlignLast:'center'}}><BiArrowBack color='#fff'/></span> Back
             </button>
             </div>
-            <p>Enter Category Name</p>
+            <div className={Styles.formcontainer}>
+           <p style={{marginBottom:3}}>Enter Category Name</p>
            <InputText placeholder={'Enter Category Name'} value={data} onChange={(e)=>setData(e.target.value)}/>
            <input type="file" name="file" id="file"  className={Styles.inputfile} onChange={onchagefile}/>
            <label for="file" className={Styles.filelable}>select image</label>
-           <p>Select Category Image</p>
             {image?
              <div className={Styles.image_conatiner}>
                 <img src={bimage} alt="cat_img" className={Styles.imgsrc} onChange={onchagefile}/> 
             </div>:''
             }
            <input type="button" className={Styles.button_container} value={item?"Update":"Add"} onClick={onSubmint}/>
-        </div>
+           </div>
+           </div>
     );
 }
 

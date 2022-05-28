@@ -21,7 +21,7 @@ function Dropdown({data,value,onChange,defaultValue}) {
       // };
       //console.log("default",data);
         return (
-          <div className={Styles.container}>
+          <>
           <Select
             value={!defaultValue?value:data.filter(option=>option.value==defaultValue.value)}
             onChange={onChange}
@@ -31,7 +31,7 @@ function Dropdown({data,value,onChange,defaultValue}) {
             name={defaultValue}
             
           />
-          </div>  
+          </>  
         );
       
 }

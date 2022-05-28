@@ -2,8 +2,9 @@ import React,{useState,useEffect, useRef} from 'react';
 import services from '../../http/services';
 import AddSubCat from './AddSubCat';
 import Styles from './GetSubCatData.module.css'
-import GetTableSubCatData from './GetTableSubCatData';
+import { AiFillEdit,AiFillDelete } from 'react-icons/ai';
 import { IoMdAdd} from 'react-icons/io';
+import '../neworder/NewOrder.module.css'
 
 const GetSubCatData = () => {
     const [data,setData] = useState([])
@@ -59,10 +60,16 @@ const GetSubCatData = () => {
         <>
         {!edit?(<div className={Styles.tableMainContainer
         }>
-                <h2>All SubCategory Data</h2>
-                <div className={Styles.btnWrapper}>
-                <p>Search Product</p>
-                <input type='text' placeholder='serach product'  className='inputtext'/>
+                <h2 style={{textAlign:'center',letterSpacing:1}}>All SubCategory Data</h2>
+                <div style={{marginBottom:15,marginTop:10}}>
+                <p style={{color:'Highlight',marginBottom:3}}>Search Subcatgory Data</p>
+                <input type='text' placeholder='serach data.....' style={{
+                    width:250,
+                    height:30,
+                    outline:'none',
+                    borderRadius:5,
+                    paddingLeft:10
+                }}/>
                 <button onClick={()=>{
                     setAddsub(true)
                     setEdit(true)
@@ -79,23 +86,36 @@ const GetSubCatData = () => {
               }}><IoMdAdd color='white'/>Add</button>
             </div>
                 <div className={Styles.tableContainer}>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>ID</span></div>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Category Name</span></div>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>SubCategory Name</span></div>
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>SubCategory Image</span></div> 
-                    <div className={Styles.table}><span style={{fontSize:12,color:'green'}}>Action</span></div> 
-                    </div>
+                   <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
+                   <tr style={{ height:40,padding:5,textAlign: 'center', fontSize: 14, backgroundColor: 'yellow'}}>
+                   <th>Index</th>
+                   <th>ID</th>
+                   <th>Category Name</th>
+                   <th>SubCategory Name</th>
+                   <th>SubCategory Image</th>
+                   <th>Action</th>
+                   </tr>
+                
                 {
                  data.length>0? data.map((item, index) => {
                         //console.log("item ");
                         return (
-
-                            <div className={Styles.tableContainer} key={item._id}>
-                                <GetTableSubCatData key={item._id} item={item} onChangeEdit={()=>onChangeEdit(item)} onDelete={()=>onDelete(item._id)}/>
-                            </div>
+                            <tr>
+                             <td>{index+1}</td>
+                             <td>{item._id}</td>
+                             <td>{item.categories?.category_name}</td>
+                             <td>{item.subcategory_name}</td>
+                             <td><img src={item.subcategory_image?item.subcategory_image:""} alt="image" style={{width:100,height:30}}/></td>
+                             <td><p>
+                             <AiFillEdit color='#fff' size={16} width={40} height={30} style={{padding:7+'px',backgroundColor:'#5276f7'}} onClick={
+                               ()=>onChangeEdit(item)}/>
+                             <AiFillDelete color='red' size={16} width={40} height={30}  style={{ padding:7,marginLeft:10+'px',backgroundColor:'#c9c9c9'}} onClick={()=>onDelete(item._id)}/></p></td>
+                            </tr>
                         )
-                    }) : <h2>No Any Product Data</h2>
+                    }) : <h2>No Any SubCategory Data</h2>
                 }
+                </table>
+                </div>
                 </div>):addsub===false&&edit?<AddSubCat item={editdata} back={back}/>:<AddSubCat back={back}/>}
             </>
     );

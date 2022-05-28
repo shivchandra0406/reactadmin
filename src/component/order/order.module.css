@@ -63,10 +63,12 @@ span{
     height:90%;
 }
 .btnWrapper{
+    width: 90%;
+    height: 60px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: center
+    justify-content:space-between;
+    align-items: center;
 }
 .inputtext{
     width: 190px;

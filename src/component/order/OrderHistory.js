@@ -191,7 +191,7 @@ const OrderHistory = () => {
     return (
         <>
         {!invoice?(<div className={Styles.tableMainContainer}>
-                <h2 style={{color:'#3F15EA'}}>All Order History Data</h2>
+                <h3 style={{color:'#3F15EA',textAlign:'center'}}>All Order History Data</h3>
                 <div className={Styles.btnWrapper}>
                 <Dropdown data={options} value = {optionValue} onChange = {onChange}/>
                 <Dropdown data={dateOptions} value = {dateOptionValue} onChange = {onChageDate}/>

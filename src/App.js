@@ -13,28 +13,42 @@ import GetDashBoardImage from "./component/dashboardimage/GetDashBoardImage";
 import GetMaterial from "./component/material/GetMaterial";
 import BulkUploadProduct from "./component/bulkUploadProduct/BulkUploadProduct";
 import Payment from "./component/paymentdetails/Payment";
-//import Login from "./component/login/Login";
 import TaxManagement from "./component/taxmanagement/TaxManagement";
 import DeliveryCharges from "./component/deliveryCharges/DeliveryCharges";
 import Faq from "./component/faq/Faq";
-const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
+import AuthProvider from "./component/AuthProvider";
+import Login from "./component/login/Login";
+import {AiOutlineUsergroupAdd,AiFillGolden} from 'react-icons/ai'
+import {FcAddDatabase,FcFaq,FcPackage,FcImageFile,FcDeployment,FcComboChart} from 'react-icons/fc'
+import {BiCategory} from 'react-icons/bi'
+import {MdShoppingCart} from 'react-icons/md'
+import {GrDeliver} from 'react-icons/gr'
+import {SiMicrosoftexcel} from 'react-icons/si'
+const dataProvider = jsonServerProvider("http://51.15.201.39:3002/");
+const tax = require('./assert/tax.png')
 
-const auth = false
-const App = () => (
-  <Admin dashboard={Dashboard} dataProvider={dataProvider}>
-    <Resource name='User' list ={User_Table}/>
-    <Resource name='Products' list ={Product_Table}/>
-    <Resource name="Category" list ={GetCatData}/>
-    <Resource name='SubCategory' list={GetSubCatData}/>
-    <Resource name="DashBoardImage" list={GetDashBoardImage}/>  
-    <Resource name="Materials" list={GetMaterial}/>
-    <Resource name="Order" list={OrderHistory}/>
-    <Resource name='BulkUploadProduct' list ={BulkUploadProduct}/>
-    <Resource name='PaymentDetails' list={Payment}/>
-    <Resource name="TaxManagement" list={TaxManagement}/>
-    <Resource name="DeliveryCharges" list={DeliveryCharges}/>
-    <Resource name="Faq" list={Faq}/>
+
+const App = () => {
+  return(
+  <Admin dashboard={Dashboard} dataProvider={dataProvider} loginPage={Login} authProvider={AuthProvider} requireAuth>
+    <Resource name='User' list ={User_Table} icon={AiOutlineUsergroupAdd}/>
+    <Resource name='Products' list ={Product_Table} icon={FcAddDatabase}/>
+    <Resource name="Category" list ={GetCatData} icon={BiCategory} />
+    <Resource name='SubCategory' list={GetSubCatData} icon={FcPackage} options={{ label: 'Sub Category' }}/>
+    <Resource name="DashBoardImage" list={GetDashBoardImage} icon={FcImageFile} options={{ label: 'DashBoard Images' }}/>  
+    <Resource name="Materials" list={GetMaterial} icon={AiFillGolden}/>
+    <Resource name="Order" list={OrderHistory} icon={MdShoppingCart}/>
+    <Resource name='BulkUploadProduct' list ={BulkUploadProduct} icon={SiMicrosoftexcel} options={{ label: 'BulkUpload Products' }}/>
+    <Resource name='PaymentDetails' list={Payment} icon={FcDeployment} options={{ label: 'Payment Details' }}/>
+    <Resource name="TaxManagement" list={TaxManagement} icon={FcComboChart} options={{ label: 'Taxes Managements' }}/>
+    <Resource name="DeliveryCharges" list={DeliveryCharges} icon={GrDeliver} options={{ label: 'Delivery Charges' }}/>
+    <Resource name="Faq" list={Faq} icon={FcFaq}/>
   </Admin>
 );
+}
+
+const logOut = () =>{
+   localStorage.removeItem('@logingDetails')
+}
 
 export default App;

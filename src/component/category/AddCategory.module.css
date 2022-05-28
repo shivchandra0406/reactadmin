@@ -1,8 +1,6 @@
 .container{
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
 }
 .inputfile{
     display: none;
@@ -23,8 +21,8 @@
     background-color: rgb(8, 98, 114);
 }
 .button_container{
-    width: 150px;
-    height: 40px;
+    width: 120px;
+    height: 30px;
     font-size: 18px;
     color: floralwhite;
     text-transform: uppercase;
@@ -52,4 +50,27 @@
 .bckbtn_container{
     display: flex;
     flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.bckbutton{
+    width:100px;
+    height:32px;
+    text-align: center;
+    font-size:16px;
+    background-color:#15A6EA;
+    border-radius:10px;
+    color: #fff;
+    border: none;
+}
+.bckbutton:hover{
+    background-color: #EA5915;
+    color:#fff;
+}
+.formcontainer{
+    display: flex;
+    flex-direction:column;
+    background-color: #fff;
+    justify-content:flex-start;
+    width: 100%;
 }

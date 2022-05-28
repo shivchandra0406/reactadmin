@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Styles from './User.module.css'
 
-import Table1 from './Table1'
+import { AiFillDelete } from 'react-icons/ai';
 import services from '../../http/services'
 import Dropdown from '../DropDown';
 
@@ -10,14 +10,14 @@ import Dropdown from '../DropDown';
 const User_Table = () => {
 
     const [data, setData] = useState([])
-    const [allData,setAllData] = useState([])
+    const [allData, setAllData] = useState([])
     const searchparam = useRef('')
-    const [filterdata,setFilterdata] = useState([])
+    const [filterdata, setFilterdata] = useState([])
     const limitdata = 20
-    let [totalPage,setTotalPage] = useState(0)
-    const [page,setPage] = useState(0)
-    const [options,setOptions] = useState([])
-    const [optionValue,setOptionValue] = useState('')
+    let [totalPage, setTotalPage] = useState(0)
+    const [page, setPage] = useState(0)
+    const [options, setOptions] = useState([])
+    const [optionValue, setOptionValue] = useState('')
     //const [page,setPage] = useState(0)
     useEffect(() => {
         fetchData()
@@ -26,53 +26,52 @@ const User_Table = () => {
     }, [])
 
     //chnaging page run useEffect 
-    useEffect(()=>{
-        let start = limitdata*page,end=(limitdata*page)+limitdata
-        let slicedata = allData.slice(start,end)
+    useEffect(() => {
+        let start = limitdata * page, end = (limitdata * page) + limitdata
+        let slicedata = allData.slice(start, end)
         setData(slicedata)
         setFilterdata(slicedata)
-    },[page])
+    }, [page])
 
     //delete product
-    const deleteAccount=async(id)=>{
+    const deleteAccount = async (id) => {
         var proceed = window.confirm("Are you sure you want to delete User Account?");
-        if(proceed){
-            let apiname = "account/deleteUserAccount/"+id
+        if (proceed) {
+            let apiname = "account/deleteUserAccount/" + id
             let result = await services.delete(apiname)
             console.log(result);
-            if(result.Status){
+            if (result.Status) {
                 alert(result.message)
-                setData(data.filter(item=>item._id!==id))
-            }else{
-                alert(result.message) 
+                setData(data.filter(item => item._id !== id))
+            } else {
+                alert(result.message)
             }
         }
     }
 
-    const designSelector = (allItem) =>{
+    const designSelector = (allItem) => {
         let len = allItem.length
-        let div = len/limitdata,t
+        let div = len / limitdata, t
         //console.log("div",div);
-        if(Number.isInteger(div))
-        { 
-            t=div-1
-            setTotalPage(div-1)
+        if (Number.isInteger(div)) {
+            t = div - 1
+            setTotalPage(div - 1)
         }
-        else{
-            t=Math.floor(div+1)
+        else {
+            t = Math.floor(div + 1)
             setTotalPage(t)
         }
         console.log(totalPage);
         let optiondata = []
-        for (let i=0;i<t;i++){
-            optiondata.push({label:`page ${i}`,value:i})
+        for (let i = 0; i < t; i++) {
+            optiondata.push({ label: `page ${i}`, value: i })
         }
         setOptions(optiondata)
     }
 
     const fetchData = async (event) => {
         try {
-            let page = !event?0:event.selected
+            let page = !event ? 0 : event.selected
             const apiname = "account/getUserDetails"
             //alert('data')
             const result = await services.get(apiname)
@@ -80,7 +79,7 @@ const User_Table = () => {
             console.log("result---->", result);
             if (result.Status === true) {
                 setAllData(result.data)
-                let slicedata = result.data.slice(page,limitdata)
+                let slicedata = result.data.slice(page, limitdata)
                 setData(slicedata)
                 setFilterdata(slicedata)
                 designSelector(result.data)
@@ -94,21 +93,21 @@ const User_Table = () => {
         }
     }
 
-    const filterFunction = () =>{
-        if(searchparam.current.value===''){
+    const filterFunction = () => {
+        if (searchparam.current.value === '') {
             setData(filterdata)
-        }else{
-           setData(data.filter(item=>{
-               if(item.name.toLowerCase().includes(searchparam.current.value.toLowerCase())||
-                item.email.toLowerCase().includes(searchparam.current.value.toLowerCase())
-               ){
-                   return item
-               }
-           })) 
+        } else {
+            setData(data.filter(item => {
+                if (item.name.toLowerCase().includes(searchparam.current.value.toLowerCase()) ||
+                    item.email.toLowerCase().includes(searchparam.current.value.toLowerCase())
+                ) {
+                    return item
+                }
+            }))
         }
     }
 
-    const onChange = (event) =>{
+    const onChange = (event) => {
         setOptionValue(event)
         setPage(event.value)
     }
@@ -116,51 +115,61 @@ const User_Table = () => {
     return (
         <>
             <div className={Styles.tableMainContainer}>
-                <h2>All UserDetails</h2>
+                <h2 style={{textAlign:'center'}}>All UserDetails</h2>
+                <p style={{ fontSize: 16, marginRight: 10, marginTop: 5,color:'Highlight'}}>search user</p>
                 <div className={Styles.SearchContainer}>
-                  <p style={{fontSize:16,marginRight:10,marginTop:5}}>search user</p>
-                  <input ref={searchparam} className={Styles.textinput} type="text" placeholder='Enter user Name' onChange={filterFunction}/>
-                   <button className={Styles.paginationbtn} onClick={()=>{
-                       console.log("previous",page);
-                       if(page==0){
-                           return
-                       }else{
-                           setPage(page-1)
-                       }
-                   }}>{"< previous"}</button>
-                   <Dropdown value={optionValue} data={options} onChange={onChange} />
-                   <button className={Styles.paginationbtn} onClick={()=>{
-                    if(page<totalPage)   
-                        setPage(page+1)
-                       console.log(page,totalPage);
-                   }}>{"Next >"}</button>
-                  </div>
-                <div className={Styles.wraptable}>
-                <div className={Styles.tableContainer}>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Account ID</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Name</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Email</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>MobileNumber</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Dob</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Profile_image</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Created Account</p></div>
-                    <div className={Styles.table}><p style={{fontSize:10,color:'green'}}>Action</p></div>
+                    <input ref={searchparam} className={Styles.textinput} type="text" placeholder='Enter user Name' onChange={filterFunction} />
+                    <button className={Styles.paginationbtn} onClick={() => {
+                        console.log("previous", page);
+                        if (page == 0) {
+                            return
+                        } else {
+                            setPage(page - 1)
+                        }
+                    }}>{"< previous"}</button>
+                    <Dropdown value={optionValue} data={options} onChange={onChange} />
+                    <button className={Styles.paginationbtn} onClick={() => {
+                        if (page < totalPage)
+                            setPage(page + 1)
+                        console.log(page, totalPage);
+                    }}>{"Next >"}</button>
                 </div>
-                {
-                    data.length>0? data.map((item, index) => {
-                        //console.log("item ");
-                        return (
-
-                            <div className={Styles.tableContainer} key={item._id}>
-                                <Table1 key={item._id} item={item} 
-                                onDelete={()=>deleteAccount(item._id)}></Table1>
-                            </div>
-                        )
-                    }) : <h2>No Any Product Data</h2>
-                }
+                <div className={Styles.wraptable}>
+                    <div className={Styles.tableContainer}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
+                            <tr style={{ height:40,padding:5,textAlign: 'center', fontSize: 14, backgroundColor: 'yellow'}}>
+                            <th>Index</th>
+                            <th>Account Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Mobile Number</th>
+                            <th>DOB</th>
+                            <th>Created Account</th>
+                            <th>Action</th>
+                            </tr>
+                            {
+                                data.length > 0 ? data.map((item, index) => {
+                                    //console.log("item ");
+                                    return (
+                                        <tr>
+                                            <td>{index + 1}</td>
+                                            <td>{item._id}</td>
+                                            <td>{item.name}</td>
+                                            <td>{item.email}</td>
+                                            <td>{item.mobilenumber}</td>
+                                            <td>{item.dob}</td>
+                                            <td>{item.createdAt}</td>
+                                            <td><p>
+                                                <AiFillDelete color='red' size={16} width={50} height={30} style={{ padding: 10, marginLeft: 10 + 'px', backgroundColor: '#ebf2b3' }} onClick={()=>deleteAccount(item._id)} /></p></td>
+                                        </tr>
+                                    )
+                                }) : <h2>No Any User Data</h2>
+                            }
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </>
+        </>
     )
 }
 

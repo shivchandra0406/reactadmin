@@ -94,26 +94,27 @@ const AddSubCat = ({item,back}) => {
     }
     return (
         <div className={Styles.container}>
-           <h2>Add SubCategory Data</h2> 
+           <h3 style={{textAlign:'center',textTransform:'uppercase'}}>Add SubCategory Data</h3> 
            <div className={Styles.bckbtn_container}>
-           <button  onClick={()=>back()}
-           style={{width:100,height:30,textAlign:"center",fontSize:16,backgroundColor:"white",borderRadius:10}}>
-            <span style={{textAlignLast:'center'}}><BiArrowBack color='green'/></span> Back
+           <button  onClick={()=>back()} className={Styles.backbutton}>
+            <span style={{textAlignLast:'center'}}><BiArrowBack color='#fff' size={16}/></span> Back
            </button>
            </div>
+           <div className={Styles.formcontainer}>
+           <p style={{marginBottom:3,color:'Highlight'}}>Enter SubCategory Title</p>
            <InputText placeholder={'Enter SubCategory Name'} value={data} onChange={(e)=>setData(e.target.value)}/>
            <Dropdown data={catdata} value={selectedOption} defaultValue ={item?selectedOption:null}
             onChange={handleChange}/>
            <input type="file" name="file" id="file" className={Styles.inputfile} onChange={onchagefile}/>
            <label for="file" className={Styles.filelable}>Choose a Image</label>
-           <p>Select Category Image</p>
             {image?
              <div className={Styles.image_conatiner}>
                 <img src={bimage} alt="cat_img" className={Styles.imgsrc} onChange={onchagefile}/> 
             </div>:''
             }
            <input type="button" className={Styles.button_container} value="Add" onClick={onSubmint}/>
-        </div>
+           </div>
+           </div>
     );
 }
 

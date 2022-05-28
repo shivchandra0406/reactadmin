@@ -1,137 +1,156 @@
-import React,{useState,useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../product/ProductTable.module.css'
 import services from '../../http/services';
-import GetTableDashBoardImage from './GetTableDashBoardImage';
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import AddDashBoardImage from './AddDashBoardImage'
-import { IoMdAdd} from 'react-icons/io';
+import { IoMdAdd } from 'react-icons/io';
+import '../neworder/NewOrder.module.css'
 
 const GetDashBoardImage = () => {
 
-    const [data,setData] = useState([])
-    const [edit,setEdit] = useState(false)
-    const [editdata,setEditdata] = useState({})
-    const [singledata,setSingledata] = useState(false)
-    const [backbtnrender,setBackbtnrender] = useState(false)
-    const [filterdata,setFilterdata] = useState([])
+    const [data, setData] = useState([])
+    const [edit, setEdit] = useState(false)
+    const [editdata, setEditdata] = useState({})
+    const [singledata, setSingledata] = useState(false)
+    const [backbtnrender, setBackbtnrender] = useState(false)
+    const [filterdata, setFilterdata] = useState([])
     const searchparams = useRef('')
-    
-    const fetchData = async()=>{
+
+    const fetchData = async () => {
         const apiname = "product/getDeshBoardImage"
-        try{
+        try {
             const result = await services.get(apiname)
-            if(result.Status===true){
+            if (result.Status === true) {
                 setData(result.data)
                 setFilterdata(result.data)
                 console.log(result);
-            }else{
+            } else {
                 console.log(result);
                 alert(result.message)
             }
-        }catch(err){
+        } catch (err) {
             console.log(err);
             alert(err.message)
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         console.log("lsdjfl;sjdfk------>");
         fetchData()
-    },[backbtnrender])
+    }, [backbtnrender])
 
     useEffect(() => {
         fetchData()
     }, []);
 
-    const onChangeEdit = (item)=>{
+    const onChangeEdit = (item) => {
         setEditdata(item)
         setEdit(true)
     }
 
-    const filterFunction = () =>{
-        if(searchparams.current.value===''){
+    const filterFunction = () => {
+        if (searchparams.current.value === '') {
             setData(filterdata)
-        }else{
-            setData(filterdata.filter(item=>{
-                if(item.dashboard_name.toLowerCase().includes(searchparams.current.value.toLowerCase()))
-                {
+        } else {
+            setData(filterdata.filter(item => {
+                if (item.dashboard_name.toLowerCase().includes(searchparams.current.value.toLowerCase())) {
                     return item
                 }
             }))
         }
     }
 
-    const onDelete = async(id) =>{
-        console.log('delete item',id);
+    const onDelete = async (id) => {
+        console.log('delete item', id);
         let confirm = window.confirm('Are you sure you want to delete')
-        if(confirm){
-            try{
+        if (confirm) {
+            try {
                 let apiname = 'product/deleteDashBoard'
                 let params = {
-                    _id:[id]
+                    _id: [id]
                 }
-                let result = await services.delete(apiname,params)
+                let result = await services.delete(apiname, params)
                 console.log(result);
-                if(result.Status){
-                    setData(data.filter(item=>item._id!==id))
+                if (result.Status) {
+                    setData(data.filter(item => item._id !== id))
                     alert(result.message)
-                }else{
+                } else {
                     alert(result.message)
                 }
-            }catch(err){
+            } catch (err) {
                 alert(err.message)
                 console.log(err);
             }
         }
     }
-    const back = ()=>{
+    const back = () => {
         setEdit(false)
         setSingledata(false)
         setBackbtnrender(!backbtnrender)
     }
     return (
         <>
-        {
-            !edit?(<div className="tableMainContainer">
-                <h2>All DashBoard Data</h2>
-                <div className='btnWrapper'>
-                    <p>Search DashBoard</p>
-                    <input ref={searchparams} type='text' placeholder='serach product' className='inputtext' onChange={filterFunction} />
-                    <button onClick={()=>{
-                        setSingledata(true)
-                        setEdit(true)
-                    }}
-                    style={{
-                        width:90,
-                        height:30,
-                        background:'#04b023',
-                        color:'white',
-                        outlineColor:'white',
-                        border:0,
-                        marginLeft:15,
-                        borderRadius:10
-                  }}><IoMdAdd color='white'/>Add</button>
-                </div>
-                <div className="wraptable">
-                <div className="tableContainer">
-                    <div className="table"><span style={{fontSize:12,color:'green'}}>ID</span></div>
-                    <div className="table"><span style={{fontSize:12,color:'green'}}>DashBoard Title</span></div>
-                    <div className="table"><span style={{fontSize:12,color:'green'}}>DashBoard Image</span></div> 
-                    <div className="table"><span style={{fontSize:12,color:'green'}}>Action</span></div> 
-                </div>
-                {
-                 data.length>0? data.map((item, index) => {
-                        //console.log("item ");
-                        return (
+            {
+                !edit ? (<div className="tableMainContainer">
+                    <h2 style={{textAlign:'center'}}>All DashBoard Data</h2>
+                    <div style={{marginBottom:15,marginTop:10}}>
+                        <p style={{color:'Highlight',marginBottom:3}}>Search DashBoard Data</p>
+                        <input ref={searchparams} type='text' placeholder='search Data ...' onChange={filterFunction} style={{
+                            width:250,
+                            height:30,
+                            outline:'none',
+                            borderRadius:5,
+                            paddingLeft:10,
+                            
+                        }}/>
+                        <button onClick={() => {
+                            setSingledata(true)
+                            setEdit(true)
+                        }}
+                            style={{
+                                width: 90,
+                                height: 30,
+                                background: '#04b023',
+                                color: 'white',
+                                outlineColor: 'white',
+                                border: 0,
+                                marginLeft: 15,
+                                borderRadius: 10
+                            }}><IoMdAdd color='white' />Add</button>
+                    </div>
+                    <div className="wraptable">
+                        <div className="tableContainer">
+                            <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
+                                <tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow' }}>
+                                    <th>Index</th>
+                                    <th>ID</th>
+                                    <th>DashBoard Title</th>
+                                    <th>DashBoard Image</th>
+                                    <th>Acion</th>
+                                </tr>
 
-                            <div className="tableContainer" key={item._id}>
-                                <GetTableDashBoardImage key={item._id} item={item} onChangeEdit={()=>onChangeEdit(item)} onDelete={()=>onDelete(item._id)}/>
-                            </div>
-                        )
-                    }) : <h2>No Any Product Data</h2>
-                }
-                </div>
-                </div>):!singledata && edit?<AddDashBoardImage item={editdata} back = {back}/>:<AddDashBoardImage back={back}/>
+                                {
+                                    data.length > 0 ? data.map((item, index) => {
+                                        //console.log("item ");
+                                        return (
+                                            <tr>
+                                                <td>{index + 1}</td>
+                                                <td>{item._id}</td>
+                                                <td>{item.dashboard_name}</td>
+                                                <td><img src={item.dashboard_img ? item.dashboard_img : ""} alt="image" style={{ width: 100, height: 30 }} /></td>
+                                                <td><p>
+                                                    <AiFillEdit color='#fff' size={16} width={30} height={25} style={{ padding:7 + 'px', backgroundColor: '#5276f7' }} onClick={
+                                                        ()=>onChangeEdit(item)} />
+                                                    <AiFillDelete color='red' size={16} width={30} height={25} style={{ padding:7, marginLeft: 10 + 'px', backgroundColor: '#c9c9c9' }} onClick={()=>onDelete(item._id)} /></p></td>
+                                            </tr>
+                                        )
+                                    }) : <h2>No Any Product Data</h2>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>) : !singledata && edit ? <AddDashBoardImage item={editdata} back={back} /> : <AddDashBoardImage back={back} />
             }
-            
+
         </>
     );
 }
