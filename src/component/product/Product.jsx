@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useContext} from "react";
 import InputText from "../../shared-component/inputtext/InputText";
 import './Product_Css.css'
 import services from "../../http/services";
@@ -6,9 +6,12 @@ import Dropdown from '../DropDown';
 import getproductdata from "../../getdatafrombackend/getprodutdata";
 import { BiArrowBack } from 'react-icons/bi';
 // import fs from 'fs'
+import { GlobalProductData } from "./Product_Table";
 
 
 const Product = ({item,back}) =>{
+    const {saveData,updateData} = useContext(GlobalProductData)
+
     const [categoryData,setCategoryData] = useState([])
     const [subCategoryData,setSubCategoryData] = useState([])
     const [dashboardData,setdashboardData] = useState([])
@@ -33,7 +36,8 @@ const Product = ({item,back}) =>{
         material:"",
         productDescription:"",
         ProductImage:[],
-        productCode:null
+        productCode:null,
+        totalItem:''
     })
     // let imagedata = item.productImage.length>0?item.productImage:[]
     // for(let image of imagedata)
@@ -58,7 +62,8 @@ const Product = ({item,back}) =>{
                     productPrice:item?item.productPrice:"",
                     material:{value:item?item.material?._id:"",lable:item?item.material?.material_type_name:''},
                     productDescription:item?item.productDescription:"",
-                    productCode:item?.productCode
+                    productCode:item?.productCode,
+                    totalItem:item.totalItem
                 }
             })
             //let {bulletPoint1,bulletPoint2,bulletPoint3,bulletPoint4,bulletPoint5} = item.bulletPoints
@@ -161,6 +166,7 @@ const Product = ({item,back}) =>{
         formdata.append('bulletPoints[bulletPoint5]',bulletPoints.bulletPoint5)
         formdata.append('productDescription',data.productDescription)
         formdata.append('productCode',data.productCode)
+        formdata.append('totalItem',data.totalItem)
         image.map(img=>formdata.append('ProductImage',img))
         try{
             // const config = {     
@@ -171,7 +177,11 @@ const Product = ({item,back}) =>{
                 apiname='product/updateProduct/'+item._id
                 let result = await services.put(apiname,formdata,true)
                 if(result.Status){
+                    //console.log("update rsullt--->",result)
+                    updateData(result.updatedata)
                     alert(result.message)
+                    setBimage([])
+                    setImage([])
                 }else{
                     alert(result.message)
                 }
@@ -179,7 +189,10 @@ const Product = ({item,back}) =>{
                 const result = await services.post(apiname,formdata,true)
                 if(result.Status===true){
                     console.log(result);
-                    alert('success')
+                    saveData(result.product)
+                    setBimage([])
+                    setImage([])
+                    alert('Added Product Successfully')
                 }else{
                     alert('Failue')
                     console.log(formdata.get('productName'),formdata.get('ProductImage'))
@@ -193,11 +206,10 @@ const Product = ({item,back}) =>{
     
     return (
         <div className="main_container">
-            <h2>Product</h2>
+            <h2 style={{textAlign:'center'}}> Add Product Details</h2>
             <div className="bckbtn_container">
-             <button  onClick={()=>back()}
-             style={{width:100,height:30,textAlign:"center",fontSize:16,backgroundColor:"white",borderRadius:10}}>
-              <span style={{textAlignLast:'center'}}><BiArrowBack color='green'/></span> Back
+             <button  onClick={()=>back()} className="backbutton">
+              <span style={{textAlignLast:'center'}}><BiArrowBack color='#fff' size={16}/></span> Back
              </button>
             </div>
             
@@ -248,12 +260,18 @@ const Product = ({item,back}) =>{
                       return {...old,productCode:e.target.value}
                   })
               }}/>
-              <p>Enter Product Description</p>
-              <InputText placeholder="Enter Product Description" value={data.productDescription} onChange={(e)=>{
+              <p>Enter Total Item</p>
+              <InputText placeholder="Enter Total Item" value={data.totalItem} onChange={(e)=>{
                   setData((old)=>{
-                      return {...old,productDescription:e.target.value}
+                      return {...old,totalItem:e.target.value}
                   })
               }}/>
+              <p>Enter Product Descripton ...</p>
+              <textarea type="text" placeholder='Enter Product Descriptons .....' className="textArea" value={data.productDescription} onChange={(e)=>{
+                setData(old=>{
+                    return {...old,productDescription:e.target.value}
+                })
+            }}/>
               <p>Enter All Bullet Points</p>
                 <div className="bulletContainer">
                     <InputText placeholder="Enter Bullet Points1" value={bulletPoints.bulletPoint1} onChange={(e)=>{
@@ -298,10 +316,7 @@ const Product = ({item,back}) =>{
             }
               <input type="file" name="file" id="file" onChange={onImageChange} className="inputfile" multiple />
               <label for="file">Choose a file</label>
-            </div>
-            
-            <div className="buttonConatiner" >
-             <button className="button" onClick={saveProduct}><span>{item?'Update':'Save'}</span></button>
+              <button className="button" onClick={saveProduct}><span>{item?'Update':'Save'}</span></button>
             </div>
         </div>
     )

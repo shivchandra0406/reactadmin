@@ -100,22 +100,14 @@ const GetDashBoardImage = () => {
                             outline:'none',
                             borderRadius:5,
                             paddingLeft:10,
-                            
+                            marginRight:10
                         }}/>
                         <button onClick={() => {
                             setSingledata(true)
                             setEdit(true)
                         }}
-                            style={{
-                                width: 90,
-                                height: 30,
-                                background: '#04b023',
-                                color: 'white',
-                                outlineColor: 'white',
-                                border: 0,
-                                marginLeft: 15,
-                                borderRadius: 10
-                            }}><IoMdAdd color='white' />Add</button>
+                        className="backbutton"
+                        ><IoMdAdd color='white' />Add</button>
                     </div>
                     <div className="wraptable">
                         <div className="tableContainer">

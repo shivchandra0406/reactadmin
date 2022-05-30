@@ -95,22 +95,15 @@ const GetMaterial = () => {
                         height:30,
                         borderRadius:5,
                         outline:'none',
-                        paddingLeft:10
+                        paddingLeft:10,
+                        marginRight:5
                         }}/>
                     <button onClick={() => {
                         setAddsingle(true)
                         setEdit(true)
                     }}
-                        style={{
-                            width: 90,
-                            height: 30,
-                            background: '#04b023',
-                            color: 'white',
-                            marginLeft: 15,
-                            outlineColor: 'white',
-                            border: 0,
-                            borderRadius: 10
-                        }}><IoMdAdd color='white' />Add</button></div>
+                    className="backbutton"
+                    ><IoMdAdd color='white' />Add</button></div>
                 <div className="tableContainer">
                     <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
                         <tr style={{ height:40,padding:5,textAlign: 'center', fontSize: 14, backgroundColor: 'yellow'}}>

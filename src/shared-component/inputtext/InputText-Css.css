@@ -3,13 +3,13 @@
 .textinput{
     width: 40%;
     height: 30px;
-    font-size: 18px;
+    font-size: 16px;
     outline: none;
     background-color: #fff;
-    color: black;
     margin-top: 0px;
     margin-bottom: 8px;
     border-radius: 5px;
     margin-left: 0px;
     padding-left: 10px;
+    border-color:#aeaeae;
 }

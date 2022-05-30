@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, createContext } from 'react';
 
 import './GetCat.moduls.css';
 import services from '../../http/services';
 import AddCategory from '../category/AddCategory'
 import { IoMdAdd } from 'react-icons/io';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+
+export const CatData = createContext()
 
 const GetCatData = () => {
     const [data, setData] = useState([])
@@ -36,9 +38,9 @@ const GetCatData = () => {
         fetchData()
     }, []);
 
-    useEffect(() => {
-        fetchData()
-    }, [bckbtn])
+    // useEffect(() => {
+    //     fetchData()
+    // }, [bckbtn])
 
     const onChangeEdit = (item) => {
         setEditData(item)
@@ -86,70 +88,94 @@ const GetCatData = () => {
         }
     }
 
-    return (
-        <>
-            {!edit ? (<div className="tableMainContainer">
-                <h3 style={{textAlign:'center',letterSpacing:1,textTransform:"uppercase"}}>All Category Data</h3>
-                <div style={{
-                    marginBottom:15,
-                    marginTop:10
-                }}>
-                    <p style={{marginBottom:3,color:'#6232f0'}}>Search SubCatgory</p>
-                    <input type='text' placeholder='search data...' style={{
-                        width:250,
-                        height:30,
-                        borderRadius:5,
-                        paddingLeft:10,
-                        outline:'none'
-                    }} />
-                    <button onClick={() => {
-                        setAddCat(true)
-                        setEdit(true)
-                    }}
-                        style={{
-                            width: 90,
-                            height: 30,
-                            background: '#04b023',
-                            color: 'white',
-                            marginLeft: 15,
-                            outlineColor: 'white',
-                            border: 0,
-                            borderRadius: 10
-                        }}><IoMdAdd color='white' />Add</button>
-                </div>
-                <div className='mailtablecontainer'>
-                    <div className="tableContainer">
-                        <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
-                            <tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow' }}>
-                                <th>Index</th>
-                                <th>ID</th>
-                                <th>Category Name</th>
-                                <th>Category Image</th>
-                                <th>Action</th>
-                            </tr>
-                            {
+    //SaveData come from child component start
+    const saveData = (item) =>{
+        console.log("item---->",item);
+        return setData((old)=>{
+            return [...old,item]
+        })
+    }
+    //SaveData come from child component end
 
-                                data.length > 0 ? data.map((item, index) => {
-                                    //console.log("item ");
-                                    return (
-                                        <tr>
-                                            <td>{index + 1}</td>
-                                            <td>{item._id}</td>
-                                            <td>{item.category_name}</td>
-                                            <td><img src={item.category_image ? item.category_image : ""} alt="image" style={{ width: 100, height: 30 }} /></td>
-                                            <td><p>
-                                                <AiFillEdit color='#fff' size={16} width={20} height={15} style={{ padding: 7 + 'px', backgroundColor: '#5276f7' }} onClick={
-                                                    () => onChangeEdit(item)} />
-                                                <AiFillDelete color='red' size={16} width={20} height={15} style={{ padding: 7, marginLeft: 10 + 'px', backgroundColor: '#c9c9c9' }} onClick={() => deleteCategoryData(item._id)} /></p></td>
-                                        </tr>
-                                    )
-                                }) : <h2>No SubCatgory Data</h2>
-                            }
-                        </table>
+    //update data come from child component start
+    const updateData = (item)=>{
+        return setData(old=>{
+            return old.map(d=>{
+                if(d._id===item._id){
+                    return item
+                }
+                return d
+            })
+        })
+    }
+    //update data come form child component end
+
+    return (
+        <CatData.Provider value={{saveData:saveData,updateData:updateData}}>
+            <>
+                {!edit ? (<div className="tableMainContainer">
+                    <h3 style={{ textAlign: 'center', letterSpacing: 1, textTransform: "uppercase" }}>All Category Data</h3>
+                    <div style={{
+                        marginBottom: 15,
+                        marginTop: 10
+                    }}>
+                        <p style={{ marginBottom: 3, color: '#6232f0' }}>Search Catgory Data</p>
+                        <input type='text' placeholder='search data...' style={{
+                            width: 250,
+                            height: 30,
+                            borderRadius: 5,
+                            paddingLeft: 10,
+                            outline: 'none'
+                        }} />
+                        <button onClick={() => {
+                            setAddCat(true)
+                            setEdit(true)
+                        }}
+                            style={{
+                                width: 90,
+                                height: 30,
+                                background: '#04b023',
+                                color: 'white',
+                                marginLeft: 15,
+                                outlineColor: 'white',
+                                border: 0,
+                                borderRadius: 10
+                            }}><IoMdAdd color='white' />Add</button>
                     </div>
-                </div>
-            </div>) : edit && !addCat ? <AddCategory item={editData} back={back} /> : <AddCategory back={back} />}
-        </>
+                    <div className='mailtablecontainer'>
+                        <div className="tableContainer">
+                            <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
+                                <tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow' }}>
+                                    <th>Index</th>
+                                    <th>ID</th>
+                                    <th>Category Name</th>
+                                    <th>Category Image</th>
+                                    <th>Action</th>
+                                </tr>
+                                {
+
+                                    data.length > 0 ? data.map((item, index) => {
+                                        //console.log("item ");
+                                        return (
+                                            <tr>
+                                                <td>{index + 1}</td>
+                                                <td>{item._id}</td>
+                                                <td>{item.category_name}</td>
+                                                <td><img src={item.category_image ? item.category_image : ""} alt="image" style={{ width: 100, height: 30 }} /></td>
+                                                <td><p>
+                                                    <AiFillEdit color='#fff' size={16} width={20} height={15} style={{ padding: 7 + 'px', backgroundColor: '#5276f7' }} onClick={
+                                                        () => onChangeEdit(item)} />
+                                                    <AiFillDelete color='red' size={16} width={20} height={15} style={{ padding: 7, marginLeft: 10 + 'px', backgroundColor: '#c9c9c9' }} onClick={() => deleteCategoryData(item._id)} /></p></td>
+                                            </tr>
+                                        )
+                                    }) : <h2>No Catgory Data</h2>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>) : edit && !addCat ? <AddCategory item={editData} back={back} /> : <AddCategory back={back} />}
+            </>
+        </CatData.Provider>
     );
 }
 

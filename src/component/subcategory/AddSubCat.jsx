@@ -1,9 +1,10 @@
-import React,{ useState,useEffect } from 'react';
+import React,{ useState,useEffect,useContext} from 'react';
 
 import InputText from '../../shared-component/inputtext/InputText';
 import Dropdown from '../DropDown';
 import services  from '../../http/services';
 import { BiArrowBack } from 'react-icons/bi';
+import { globalSubCatData } from './GetSubCatData';
 
 import Styles from './AddSubCat.module.css'
 const AddSubCat = ({item,back}) => {
@@ -12,6 +13,9 @@ const AddSubCat = ({item,back}) => {
     const [data,setData] = useState('')
     const [catdata,setCatdata] = useState([])
     const [selectedOption,setSelectedOption] = useState('')
+
+    const {saveData,updateData} = useContext(globalSubCatData)
+
     //console.log("item",item);
     useEffect(() => {
         if(item){
@@ -73,7 +77,13 @@ const AddSubCat = ({item,back}) => {
                 let apiname = 'product/updateSubCategory/'+item._id
                 let result = await services.put(apiname,formdata,true)
                 if(result.Status===true){
-                    console.log(result);
+                    //console.log("updateData",result);
+                    setData('')
+                    setSelectedOption('')
+                    setCatdata('')
+                    setBimage('')
+                    setImage('')
+                    updateData(result.result)
                     alert('update successfully')
                 }else{
                     alert(result.message)
@@ -81,7 +91,12 @@ const AddSubCat = ({item,back}) => {
             }else{
                 const result = await services.post(apiname,formdata,true)
                 if(result.Status===true){
-                    alert('success')
+                    setData('')
+                    setCatdata('')
+                    setBimage('')
+                    setImage('')
+                    saveData(result.data)
+                    alert('Added sucessfully')
                 }else{
                     console.log(result);
                     alert(result.message)
@@ -112,7 +127,7 @@ const AddSubCat = ({item,back}) => {
                 <img src={bimage} alt="cat_img" className={Styles.imgsrc} onChange={onchagefile}/> 
             </div>:''
             }
-           <input type="button" className={Styles.button_container} value="Add" onClick={onSubmint}/>
+           <input type="button" className={Styles.button_container} value={item?"Update":"Add"} onClick={onSubmint}/>
            </div>
            </div>
     );

@@ -1,14 +1,16 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import InputText from '../../shared-component/inputtext/InputText';
 //import Button from '../../shared-component/button-module/Button';
 import Styles from './AddCategory.module.css'
 import services from '../../http/services';
 import { BiArrowBack } from 'react-icons/bi';
+import { CatData } from '../getcategorydata/GetCatData';
 
 const AddCategory = ({item,back}) => {
     const [image,setImage] = useState('')
     const [bimage,setBimage] = useState('')
     const [data,setData] = useState('')
+    const {saveData,updateData} = useContext(CatData)
 
     const onchagefile = (e)=>{
         setImage(e.target.files[0])
@@ -34,12 +36,14 @@ const AddCategory = ({item,back}) => {
         try{
             if(item){
                 apiname = 'product/updateCategory/'+item._id
-                let result = services.put(apiname,formdata,true)
+                let result = await services.put(apiname,formdata,true)
+                console.log("update",result);
                 if(result.Status){
                     console.log("update data",result);
                     setData('')
                     setImage('')
                     setBimage('')
+                    updateData(result.result)
                     alert('update Successfully')
                 }else{
                     alert(result.message)
@@ -48,10 +52,12 @@ const AddCategory = ({item,back}) => {
             else{
                 const result = await services.post(apiname,formdata,true)
                 if(result.Status===true){
+                    console.log(result)
                     alert('Added Successfully')
                     setData('')
                     setImage('')
                     setBimage('')
+                    saveData(result.result)
                 }else{
                     console.log(result);
                     alert(result.message)

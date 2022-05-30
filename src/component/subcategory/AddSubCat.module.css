@@ -28,14 +28,14 @@
     color: floralwhite;
     text-transform: uppercase;
     letter-spacing: 1px;
-    background-color: rgb(33, 155, 29);
-    border-radius: 10px;
+    background-color: #1B69E4;
+    border-radius: 5px;
     margin-top: 20px;
     outline: none;
     border:none
 }
 .button_container:hover{
-    background-color: rgb(7, 131, 7);
+    background-color: #E4961B;
 }
 .imgsrc{
     width: 100px;
@@ -46,6 +46,7 @@
 .image_conatiner{
     width: 100px;
     height: 90px;
+    margin-top: 5px;
 }
 .btnWrapper{
     display: flex;
