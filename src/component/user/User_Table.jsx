@@ -152,7 +152,7 @@ const User_Table = () => {
                                     //console.log("item ");
                                     return (
                                         <tr>
-                                            <td>{index + 1}</td>
+                                            <td>{page===0?index+1:(limitdata*page)+(index+1)}</td>
                                             <td>{item._id}</td>
                                             <td>{item.name}</td>
                                             <td>{item.email}</td>

@@ -31,7 +31,7 @@ const Product_Table = () => {
     const [page, setPage] = useState(0)
     const [options, setOptions] = useState([])
     const [optionValue, setOptionValue] = useState('')
-    const [loading, setLoading] = useState(0)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         fetchData()
@@ -118,6 +118,7 @@ const Product_Table = () => {
             }
             else {
                 alert(result.message)
+                setLoading(false)
             }
         } catch (err) {
             console.log(err);
@@ -162,7 +163,7 @@ const Product_Table = () => {
         <GlobalProductData.Provider value={{saveData,updateData}}>
             <>
                 {!(editState) ? (<div className={Styles.tableMainContainer}>
-                    <h2>All Product Data</h2>
+                    <h2 style={{textAlign:'center'}}>All Product Data</h2>
                     <div className={Styles.butoonWrapper}>
                         <p style={{ fontSize: 16 }}>search Product</p>
                         <input ref={searchparam} className={Styles.textinput} type="text" placeholder='Enter Product Name' onChange={filterFunction} />
@@ -187,9 +188,10 @@ const Product_Table = () => {
                             console.log(page, totalPage);
                         }}>Next {">"} </button>
                     </div>
-                    <div className={Styles.wraptable}>
+                    {!loading?<div className={Styles.wraptable}>
                         <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1, overflowX: 'scroll', overflowY: 'scroll', height: '100%' }}>
                             <tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow', }}>
+                                <th>Index</th>
                                 <th>ID</th>
                                 <th>Product Image</th>
                                 <th>Product Name</th>
@@ -212,6 +214,7 @@ const Product_Table = () => {
                                     }
                                     return (
                                         <tr key={index}>
+                                            <td>{page===0?index+1:(limitdata+page)+(index+1)}</td>
                                             <td>{item ? item._id : ''}</td>
                                             <td><img src={img ? "http://51.15.201.39:3002/PinkBox/Sharp/Product/" + img : ''} alt="image" style={{ width: 90, height: 25 }} /></td>
                                             <td style={{ textOverflow: 'ellipsis' }}>{item.productName} </td>
@@ -229,7 +232,7 @@ const Product_Table = () => {
                                 }) : <h2>No Any Product Data</h2> : <ReactLoading type={'bubbles'} color={'green'} height={40} width={150} />
                             }
                         </table>
-                    </div>
+                    </div>:<div className={Styles.loadingStyle}><ReactLoading color='blue' width={50} height={100} type="spin"/></div>}
                 </div>) : (addProduct === false && editState === true ? <Product item={editState ? singledata : ''} back={back} /> : <Product back={back} />)
                 }
             </>
