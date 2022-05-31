@@ -57,7 +57,6 @@ const Login = () => {
                     })
                 }}/>
             </div>
-              
               <div className={Styles.buttonContainer}><button type="password" className={Styles.btnStyle} onClick={submitData}>Login</button></div>
             </div>
             
