@@ -8,11 +8,15 @@ import { BiArrowBack } from 'react-icons/bi';
 // import fs from 'fs'
 import { GlobalProductData } from "./Product_Table";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Product = ({item,back}) =>{
     const {saveData,updateData} = useContext(GlobalProductData)
 
     const [categoryData,setCategoryData] = useState([])
+    const [btntext,setBtntext] = useState("Add")
+    const [disabled,setDisabled] = useState(false)
     const [subCategoryData,setSubCategoryData] = useState([])
     const [dashboardData,setdashboardData] = useState([])
     const [materialData,setMaterilaData] = useState([])
@@ -53,6 +57,7 @@ const Product = ({item,back}) =>{
     useEffect(()=>{
         console.log("item",item);
         if(item){
+            setBtntext('Update')
             setData(old=>{
                 return {...old,
                     productName:item?item.productName:'',
@@ -172,6 +177,8 @@ const Product = ({item,back}) =>{
             // const config = {     
             //     headers: { 'content-type': 'multipart/form-data' }
             // }
+            setDisabled(true)
+            setBtntext(btntext+'...')
             if(item){
                 console.log("itemskdfjksdf---->",item._id,data);
                 apiname='product/updateProduct/'+item._id
@@ -179,11 +186,16 @@ const Product = ({item,back}) =>{
                 if(result.Status){
                     //console.log("update rsullt--->",result)
                     updateData(result.updatedata)
-                    alert(result.message)
+                    //alert(result.message)
                     setBimage([])
                     setImage([])
+                    setBtntext('Update')
+                    setDisabled(false)
+                    toast.success('Update Data Successfully',{position:'bottom-center'})
                 }else{
-                    alert(result.message)
+                    toast.error(result.message,{position:'bottom-center'})
+                    setBtntext('Update')
+                    setDisabled(false)
                 }
             }else{
                 const result = await services.post(apiname,formdata,true)
@@ -192,14 +204,21 @@ const Product = ({item,back}) =>{
                     saveData(result.product)
                     setBimage([])
                     setImage([])
-                    alert('Added Product Successfully')
+                    setBtntext("Add")
+                    setDisabled(false)
+                    toast.success('Added Successfully',{position:'bottom-center'})
                 }else{
-                    alert('Failue')
+                    toast.error(result.message,{position:'bottom-center'})
                     console.log(formdata.get('productName'),formdata.get('ProductImage'))
+                    setBtntext("Add")
+                    setDisabled(false)
                 }
         }
         }catch(err){
             alert(err.message)
+        }finally{
+            //setLoading(false)
+            setDisabled(false)
         }
     }
     
@@ -316,10 +335,11 @@ const Product = ({item,back}) =>{
             }
               <input type="file" name="file" id="file" onChange={onImageChange} className="inputfile" multiple />
               <label for="file">Choose a file</label>
-              <button className="button" onClick={saveProduct}><span>{item?'Update':'Save'}</span></button>
+              <button className="button" disabled={false} onClick={saveProduct}>{btntext}</button>
             </div>
+            <ToastContainer/>
         </div>
     )
 }
-
+            //   <button className="button" onClick={saveProduct}>{loading?<ReactLoading type={'spin'} color={'white'} height={20} width={20} className="loading"/>:item?"Update":"Add"}</button>
 export default Product

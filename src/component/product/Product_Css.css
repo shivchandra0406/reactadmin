@@ -119,3 +119,6 @@ input#file{
     border-radius: 5px;
     padding-left: 10px;
 }
+.loading{
+    text-align: center;
+}
