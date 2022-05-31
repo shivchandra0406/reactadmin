@@ -1,9 +1,8 @@
 import React,{useState,} from 'react';
 import services from '../../http/services';
 import Styles from './Login.module.css'
-import { useNavigate } from 'react-router-dom';
 import {useRedirect} from 'react-admin'
-
+const logo = require('../../assert/1024.png')
 
 const Login = () => {
     const navigate = useRedirect()
@@ -37,7 +36,10 @@ const Login = () => {
     }
     return (
         <>
-        <p style={{float:'left',marginLeft:10,marginTop:10,fontSize:18,color:'#2B1AE5',textShadow:'3px 3px 15px #888888'}}>Welcome To Pink Box Addmin Pannel</p>
+        <div className={Styles.headerContainer}>
+        <img src={logo} style = {{width:40,height:40}}/>
+        <p style={{float:'left',marginLeft:10,marginTop:10,fontSize:18,color:'#2B1AE5',textShadow:'3px 3px 15px #888888'}}>Welcome To Pink Box Addmin Pannel </p>
+        </div>
         <div className={Styles.mainContainer}> 
            <div className={Styles.loginContainer}>
             <div className={Styles.headerStyle}>

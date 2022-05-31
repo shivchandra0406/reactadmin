@@ -23,6 +23,11 @@
     justify-content: center;
     align-items: center;
 }
+.headerContainer{
+    display: flex;
+    flex-direction: row;
+    
+}
 .loginboxStyle{
     width: 100%;
     height: 45%;
