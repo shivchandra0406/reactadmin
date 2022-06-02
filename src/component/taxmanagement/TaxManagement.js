@@ -1,9 +1,11 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,createContext} from 'react';
 import Styles from './TaxManagement.module.css'
 import AddTaxes from './AddTaxes';
 import services from '../../http/services';
 import '../neworder/NewOrder.module.css'
 import { AiFillEdit} from 'react-icons/ai';
+
+export const TaxManagementContext = createContext()
 
 const TaxManagement = () => {
     const [addData,setAddData] = useState(false)
@@ -39,7 +41,21 @@ const TaxManagement = () => {
         setAddData(true)
     }
     //Onchange Edit end
+
+    //updateData Come from child AddTaxes component start
+    const updateData = (item) =>{
+        console.log("update data",item);
+        setData(data.map(ditem=>{
+            if(item._id===ditem._id){
+                return item
+            }
+            return ditem
+        }))
+    }
+    //updateData Come from child AddTaxes component end
+
     return (
+        <TaxManagementContext.Provider value={{updateData:updateData}}>
         <>
            { 
             !addData?<div>
@@ -71,6 +87,7 @@ const TaxManagement = () => {
             </div>:<AddTaxes close = {closeFunction} item = {editData?editData:{}}/>
         }
         </>
+        </TaxManagementContext.Provider>
     );
 }
 

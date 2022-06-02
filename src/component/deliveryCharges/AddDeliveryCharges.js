@@ -5,6 +5,7 @@ import CoutryData from '../../Data/CoutryData';
 import Dropdown from '../DropDown';
 
 
+
 const AddDeliveryCharges = ({close,item}) => {
     
     const [data,setData] = useState({
@@ -58,7 +59,6 @@ const AddDeliveryCharges = ({close,item}) => {
            alert(err) 
         }
     }
-    
     //onChange value start
     const onChange = (e)=>{
         setOptionalValue(e)

@@ -82,3 +82,8 @@
 .closebtn:hover{
     background-color:#C64239;
 }
+.dropdown{
+    width: 72%;
+    display: flex;
+    justify-content: flex-start;
+}

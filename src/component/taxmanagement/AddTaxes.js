@@ -1,6 +1,7 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import Styles from './TaxManagement.module.css'
 import services from '../../http/services';
+import {TaxManagementContext} from './TaxManagement'
 
 const AddTaxes = ({close,item}) => {
     
@@ -9,6 +10,7 @@ const AddTaxes = ({close,item}) => {
         cgst:0,
         sgst:0 
     })
+    const {updateData} = useContext(TaxManagementContext)
 
     useEffect(() => {
         console.log("item",item)
@@ -40,7 +42,8 @@ const AddTaxes = ({close,item}) => {
                 let result = await services.put(apiname,data)
                     console.log(result);
                     if(result.Status){
-                        alert('Added Successfully')
+                        alert('Update Successfully')
+                        updateData(result.data)
                         setData({igst:0,cgst:0,sgst:0})
                     }else{
                         alert(result.message)

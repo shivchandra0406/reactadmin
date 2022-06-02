@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,} from 'react';
 import Styles from './DeliveryCharges.module.css'
 import services from '../../http/services';
 import '../neworder/NewOrder.module.css'
