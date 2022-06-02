@@ -89,19 +89,19 @@ const GetCatData = () => {
     }
 
     //SaveData come from child component start
-    const saveData = (item) =>{
-        console.log("item---->",item);
-        return setData((old)=>{
-            return [...old,item]
+    const saveData = (item) => {
+        console.log("item---->", item);
+        return setData((old) => {
+            return [...old, item]
         })
     }
     //SaveData come from child component end
 
     //update data come from child component start
-    const updateData = (item)=>{
-        return setData(old=>{
-            return old.map(d=>{
-                if(d._id===item._id){
+    const updateData = (item) => {
+        return setData(old => {
+            return old.map(d => {
+                if (d._id === item._id) {
                     return item
                 }
                 return d
@@ -111,7 +111,7 @@ const GetCatData = () => {
     //update data come form child component end
 
     return (
-        <CatData.Provider value={{saveData:saveData,updateData:updateData}}>
+        <CatData.Provider value={{ saveData: saveData, updateData: updateData }}>
             <>
                 {!edit ? (<div className="tableMainContainer">
                     <h3 style={{ textAlign: 'center', letterSpacing: 1, textTransform: "uppercase" }}>All Category Data</h3>
@@ -145,19 +145,19 @@ const GetCatData = () => {
                     <div className='mailtablecontainer'>
                         <div className="tableContainer">
                             <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
-                                <tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow' }}>
+                                <thead><tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow' }}>
                                     <th>Index</th>
                                     <th>ID</th>
                                     <th>Category Name</th>
                                     <th>Category Image</th>
                                     <th>Action</th>
-                                </tr>
+                                </tr></thead>
                                 {
 
                                     data.length > 0 ? data.map((item, index) => {
                                         //console.log("item ");
                                         return (
-                                            <tr>
+                                            <tbody key={item._id}>                                            <tr>
                                                 <td>{index + 1}</td>
                                                 <td>{item._id}</td>
                                                 <td>{item.category_name}</td>
@@ -166,7 +166,7 @@ const GetCatData = () => {
                                                     <AiFillEdit color='#fff' size={16} width={20} height={15} style={{ padding: 7 + 'px', backgroundColor: '#5276f7' }} onClick={
                                                         () => onChangeEdit(item)} />
                                                     <AiFillDelete color='red' size={16} width={20} height={15} style={{ padding: 7, marginLeft: 10 + 'px', backgroundColor: '#c9c9c9' }} onClick={() => deleteCategoryData(item._id)} /></p></td>
-                                            </tr>
+                                            </tr></tbody>
                                         )
                                     }) : <h2>No Catgory Data</h2>
                                 }

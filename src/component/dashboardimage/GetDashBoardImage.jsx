@@ -91,49 +91,49 @@ const GetDashBoardImage = () => {
         <>
             {
                 !edit ? (<div className="tableMainContainer">
-                    <h2 style={{textAlign:'center'}}>All DashBoard Data</h2>
-                    <div style={{marginBottom:15,marginTop:10}}>
-                        <p style={{color:'Highlight',marginBottom:3}}>Search DashBoard Data</p>
+                    <h2 style={{ textAlign: 'center' }}>All DashBoard Data</h2>
+                    <div style={{ marginBottom: 15, marginTop: 10 }}>
+                        <p style={{ color: 'Highlight', marginBottom: 3 }}>Search DashBoard Data</p>
                         <input ref={searchparams} type='text' placeholder='search Data ...' onChange={filterFunction} style={{
-                            width:250,
-                            height:30,
-                            outline:'none',
-                            borderRadius:5,
-                            paddingLeft:10,
-                            marginRight:10
-                        }}/>
+                            width: 250,
+                            height: 30,
+                            outline: 'none',
+                            borderRadius: 5,
+                            paddingLeft: 10,
+                            marginRight: 10
+                        }} />
                         <button onClick={() => {
                             setSingledata(true)
                             setEdit(true)
                         }}
-                        className="backbutton"
+                            className="backbutton"
                         ><IoMdAdd color='white' />Add</button>
                     </div>
                     <div className="wraptable">
                         <div className="tableContainer">
                             <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
-                                <tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow' }}>
+                                <thead><tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow' }}>
                                     <th>Index</th>
                                     <th>ID</th>
                                     <th>DashBoard Title</th>
                                     <th>DashBoard Image</th>
                                     <th>Acion</th>
-                                </tr>
+                                </tr></thead>
 
                                 {
                                     data.length > 0 ? data.map((item, index) => {
                                         //console.log("item ");
                                         return (
-                                            <tr>
+                                            <tbody key={item._id}>                                            <tr>
                                                 <td>{index + 1}</td>
                                                 <td>{item._id}</td>
                                                 <td>{item.dashboard_name}</td>
                                                 <td><img src={item.dashboard_img ? item.dashboard_img : ""} alt="image" style={{ width: 100, height: 30 }} /></td>
                                                 <td><p>
-                                                    <AiFillEdit color='#fff' size={16} width={30} height={25} style={{ padding:7 + 'px', backgroundColor: '#5276f7' }} onClick={
-                                                        ()=>onChangeEdit(item)} />
-                                                    <AiFillDelete color='red' size={16} width={30} height={25} style={{ padding:7, marginLeft: 10 + 'px', backgroundColor: '#c9c9c9' }} onClick={()=>onDelete(item._id)} /></p></td>
-                                            </tr>
+                                                    <AiFillEdit color='#fff' size={16} width={30} height={25} style={{ padding: 7 + 'px', backgroundColor: '#5276f7' }} onClick={
+                                                        () => onChangeEdit(item)} />
+                                                    <AiFillDelete color='red' size={16} width={30} height={25} style={{ padding: 7, marginLeft: 10 + 'px', backgroundColor: '#c9c9c9' }} onClick={() => onDelete(item._id)} /></p></td>
+                                            </tr></tbody>
                                         )
                                     }) : <h2>No Any Product Data</h2>
                                 }

@@ -24,6 +24,7 @@ import {BiCategory} from 'react-icons/bi'
 import {MdShoppingCart} from 'react-icons/md'
 import {GrDeliver} from 'react-icons/gr'
 import {SiMicrosoftexcel} from 'react-icons/si'
+import {IoMdNotificationsOutline} from 'react-icons/io'
 import GetNotification from './component/notification/GetNotification'
 const dataProvider = jsonServerProvider("http://51.15.201.39:3002/");
 const tax = require('./assert/tax.png')
@@ -44,7 +45,7 @@ const App = () => {
     <Resource name="TaxManagement" list={TaxManagement} icon={FcComboChart} options={{ label: 'Taxes Managements' }}/>
     <Resource name="DeliveryCharges" list={DeliveryCharges} icon={GrDeliver} options={{ label: 'Delivery Charges' }}/>
     <Resource name="Faq" list={Faq} icon={FcFaq}/>
-    <Resource name = "Notifications" list={GetNotification}/>
+    <Resource name = "Notifications" list={GetNotification} icon={IoMdNotificationsOutline}/>
   </Admin>
 );
 }

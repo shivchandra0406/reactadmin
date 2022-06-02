@@ -60,16 +60,16 @@ const GetSubCatData = () => {
 
     //save data come from child component add subcategory start
     const saveData = (item) => {
-        console.log("save data from child component ---->",item);
+        console.log("save data from child component ---->", item);
         data.unshift(item)
     }
     //save data come from child component add subcategory end
 
     //update data come from child component start
-    const updateData=(item)=>{
-        return setData(old=>{
-            return old.map(d=>{
-                if(d._id===item._id){
+    const updateData = (item) => {
+        return setData(old => {
+            return old.map(d => {
+                if (d._id === item._id) {
                     return item
                 }
                 return d
@@ -78,7 +78,7 @@ const GetSubCatData = () => {
     }
     //update data come from child component end
     return (
-        <globalSubCatData.Provider value={{saveData:saveData,updateData:updateData}}>
+        <globalSubCatData.Provider value={{ saveData: saveData, updateData: updateData }}>
             <>
                 {!edit ? (<div className={Styles.tableMainContainer
                 }>
@@ -96,25 +96,25 @@ const GetSubCatData = () => {
                             setAddsub(true)
                             setEdit(true)
                         }}
-                        className={Styles.backbutton}
+                            className={Styles.backbutton}
                         ><IoMdAdd color='white' />Add</button>
                     </div>
                     <div className={Styles.tableContainer}>
                         <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
-                            <tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow' }}>
+                            <thead>                            <tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow' }}>
                                 <th>Index</th>
                                 <th>ID</th>
                                 <th>Category Name</th>
                                 <th>SubCategory Name</th>
                                 <th>SubCategory Image</th>
                                 <th>Action</th>
-                            </tr>
+                            </tr></thead>
 
                             {
                                 data.length > 0 ? data.map((item, index) => {
                                     //console.log("item ");
                                     return (
-                                        <tr>
+                                        <tbody key={item._id}>                                        <tr>
                                             <td>{index + 1}</td>
                                             <td>{item._id}</td>
                                             <td>{item.categories?.category_name}</td>
@@ -124,7 +124,7 @@ const GetSubCatData = () => {
                                                 <AiFillEdit color='#fff' size={16} width={40} height={30} style={{ padding: 7 + 'px', backgroundColor: '#5276f7' }} onClick={
                                                     () => onChangeEdit(item)} />
                                                 <AiFillDelete color='red' size={16} width={40} height={30} style={{ padding: 7, marginLeft: 10 + 'px', backgroundColor: '#c9c9c9' }} onClick={() => onDelete(item._id)} /></p></td>
-                                        </tr>
+                                        </tr></tbody>
                                     )
                                 }) : <h2>No Any SubCategory Data</h2>
                             }

@@ -140,17 +140,17 @@ const Product_Table = () => {
     }
 
     //saveData come from child add product start
-    const saveData = (item) =>{
+    const saveData = (item) => {
         data.unshift(item)
     }
     //saveData come from child add product end
 
     //updateData come from child component start
-    const updateData = (item) =>{
-        console.log("item ----------------->",item);
-        return setData((old)=>{
-            return old.map(dt=>{
-                if(dt._id===item._id){
+    const updateData = (item) => {
+        console.log("item ----------------->", item);
+        return setData((old) => {
+            return old.map(dt => {
+                if (dt._id === item._id) {
                     return item
                 }
                 return dt
@@ -160,10 +160,10 @@ const Product_Table = () => {
     //updateData come from child component end
 
     return (
-        <GlobalProductData.Provider value={{saveData,updateData}}>
+        <GlobalProductData.Provider value={{ saveData, updateData }}>
             <>
                 {!(editState) ? (<div className={Styles.tableMainContainer}>
-                    <h2 style={{textAlign:'center'}}>All Product Data</h2>
+                    <h2 style={{ textAlign: 'center' }}>All Product Data</h2>
                     <div className={Styles.butoonWrapper}>
                         <p style={{ fontSize: 16 }}>search Product</p>
                         <input ref={searchparam} className={Styles.textinput} type="text" placeholder='Enter Product Name' onChange={filterFunction} />
@@ -188,9 +188,9 @@ const Product_Table = () => {
                             console.log(page, totalPage);
                         }}>Next {">"} </button>
                     </div>
-                    {!loading?<div className={Styles.wraptable}>
+                    {!loading ? <div className={Styles.wraptable}>
                         <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1, overflowX: 'scroll', overflowY: 'scroll', height: '100%' }}>
-                            <tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow', }}>
+                            <thead>                            <tr style={{ height: 40, padding: 5, textAlign: 'center', fontSize: 14, backgroundColor: 'yellow', }}>
                                 <th>Index</th>
                                 <th>ID</th>
                                 <th>Product Image</th>
@@ -202,7 +202,7 @@ const Product_Table = () => {
                                 <th>Price</th>
                                 <th>Toatal Item</th>
                                 <th style={{ width: 80 }}>Action</th>
-                            </tr>
+                            </tr></thead>
                             {
                                 !loading ? data.length > 0 ? data.map((item, index) => {
                                     //console.log("item ");
@@ -213,8 +213,8 @@ const Product_Table = () => {
                                         img = image[image.length - 1]
                                     }
                                     return (
-                                        <tr key={index}>
-                                            <td>{page===0?index+1:(limitdata+page)+(index+1)}</td>
+                                        <tbody key={index}><tr >
+                                            <td>{page === 0 ? index + 1 : (limitdata + page) + (index + 1)}</td>
                                             <td>{item ? item._id : ''}</td>
                                             <td><img src={img ? "http://51.15.201.39:3002/PinkBox/Sharp/Product/" + img : ''} alt="image" style={{ width: 90, height: 25 }} /></td>
                                             <td style={{ textOverflow: 'ellipsis' }}>{item.productName} </td>
@@ -227,12 +227,12 @@ const Product_Table = () => {
                                             <td><AiFillEdit color='red' size={14} width={30} height={20} style={{ padding: 5 + 'px', backgroundColor: '#ebf2b3' }} onClick={
                                                 () => onChangeEdit(item)} />
                                                 <AiFillDelete color='red' size={14} width={30} height={20} style={{ padding: 5, marginLeft: 10 + 'px', backgroundColor: '#ebf2b3' }} onClick={() => deleteProduct(item._id)} /></td>
-                                        </tr>
+                                        </tr></tbody>
                                     )
                                 }) : <h2>No Any Product Data</h2> : <ReactLoading type={'bubbles'} color={'green'} height={40} width={150} />
                             }
                         </table>
-                    </div>:<div className={Styles.loadingStyle}><ReactLoading color='blue' width={50} height={100} type="spin"/></div>}
+                    </div> : <div className={Styles.loadingStyle}><ReactLoading color='blue' width={50} height={100} type="spin" /></div>}
                 </div>) : (addProduct === false && editState === true ? <Product item={editState ? singledata : ''} back={back} /> : <Product back={back} />)
                 }
             </>

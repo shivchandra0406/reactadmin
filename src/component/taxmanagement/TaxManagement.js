@@ -63,27 +63,29 @@ const TaxManagement = () => {
                 <div style={{marginBottom:10}}>
                     <button className={Styles.addbtb} onClick={addFunction}>Add</button>
                 </div>
-                <div>
                 <table style={{ width: '100%', borderCollapse: 'collapse', rowGap: 1 }}>
+                        <thead>
                         <tr style={{ height:40,padding:5,textAlign: 'center', fontSize: 14, backgroundColor: 'yellow'}}>
                             <th>IGST</th>
                             <th>CGST</th>
                             <th>SGST</th>
                             <th>Action</th>
                         </tr>
+                        </thead>
                         {
                         data.length!==0?data.map(item=>{
-                            return<tr>
+                            return <tbody key={item._id}>
+                            <tr>
                                 <td>{item.igst}</td>
                                 <td>{item.cgst}</td>
                                 <td>{item.sgst}</td>
                                 <td><AiFillEdit color='red' size={14} width={30} height={20} style={{padding:10+'px',backgroundColor:'#ebf2b3'}} onClick={
                                     ()=>onChangeEdit(item)}/></td>
                             </tr>
+                            </tbody>
                             }):<p>No Taxes Data</p>
                         }
                 </table>
-                </div>
             </div>:<AddTaxes close = {closeFunction} item = {editData?editData:{}}/>
         }
         </>
