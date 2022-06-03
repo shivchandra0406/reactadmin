@@ -78,8 +78,16 @@ const Product = ({ item, back }) => {
             let { productImage } = item
             setUpdateImage(productImage)
             console.log("product image", productImage)
-            setBimage(productImage.map(item => item.productImage))
-            setImage(productImage.map(item => item.productImage))
+            setBimage(productImage.map(item =>{
+                let image = item.productImage.split('/')
+                image = image[image.length-1]
+                return `http://51.15.201.39:3002/PinkBox/Sharp/Product/${image}`
+            } ))
+            setImage(productImage.map(item =>{
+                let image = item.productImage.split('/')
+                image = image[image.length-1]
+                return image
+            }))
         }
         const getAllProductData = async () => {
             try {

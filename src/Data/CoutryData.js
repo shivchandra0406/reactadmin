@@ -4,12 +4,12 @@ const CountryData = [
         value:'India'
     },
     {
-        label:'US',
-        value:'US'
+        label:'United States',
+        value:'United States'
     },
     {
-        label:'UK',
-        value:'UK'
+        label:'United Kingdom',
+        value:'United Kingdom'
     },
     {
         label:'Australia',
@@ -56,8 +56,8 @@ const CountryData = [
         value:'Nepal'
     },
     {
-        label:'UAE',
-        value:'UAE'
+        label:'United Arab Emirates',
+        value:'United Arab Emirates'
     },
     {
         label:'Germany',
