@@ -73,6 +73,8 @@ const GetNotification = () => {
                                 <th>Index</th>
                                 <th>Title</th>
                                 <th>Product</th>
+                                <th>SubCaegory</th>
+                                <th>DashBoard Image</th>
                                 <th>Action</th>
                             </tr></thead>
                             {
@@ -80,7 +82,11 @@ const GetNotification = () => {
                                     return <tbody key={item._id}><tr>
                                         <td>{index + 1}</td>
                                         <td>{item.title}</td>
-                                        <td><p style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.product?.productName}</p></td>
+                                        <td>
+                                        <p style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.product?.productName}</p>
+                                        </td>
+                                        <td><p style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.subcategory?.subcategory_name}</p></td>
+                                        <td><p style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.dashBoardImages?.dashboard_name}</p></td>
                                         <td><AiFillDelete color='red' size={14} width={30} height={20} style={{ padding: 10 + 'px', backgroundColor: '#ebf2b3' }} onClick={
                                             () => deletNotificaion(item._id)} /></td>
                                     </tr></tbody>
